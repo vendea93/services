@@ -3,256 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flowquest OS v10.2 | Full Diamond Edition</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>FlowQuest OS - Ekosystem Biznesowy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #0d1117;
-            --card-bg: #161b22;
-            --border: #30363d;
-            --accent: #58a6ff;
-            --accent-glow: rgba(88, 166, 255, 0.3);
-            --text-main: #c9d1d9;
-            --text-muted: #8b949e;
-            --danger: #f85149;
-            --success: #3fb950;
-            --warning: #d29922;
-            --purple: #bc8cff;
+            --navy: #1a2a3a;
+            --blue: #007bff;
+            --light-blue: #e7f3ff;
+            --sage-gold: #c5a059;
+            --white: #ffffff;
+            --bg: #f4f7f9;
+            --text: #2c3e50;
         }
 
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding-bottom: 40px;
-        }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; line-height: 1.5; }
+        .container { max-width: 1200px; margin: auto; }
+        
+        /* Header */
+        header { text-align: center; padding: 40px 0; }
+        header h1 { color: var(--navy); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+        header span { color: var(--blue); }
 
-        .header {
-            width: 100%;
-            padding: 30px 0;
-            background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
-            border-bottom: 2px solid var(--accent);
-            text-align: center;
-            margin-bottom: 30px;
-        }
+        /* Solo Pricing Cards */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 50px; }
+        .price-card { background: var(--white); border-radius: 12px; padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); position: relative; border-top: 4px solid var(--navy); overflow: hidden; }
+        .price-card.featured { border-top-color: var(--blue); transform: scale(1.03); z-index: 2; }
+        .price-card h3 { margin-top: 0; color: var(--navy); }
+        .price-card .amount { font-size: 2.5em; font-weight: 800; color: var(--navy); }
+        .price-card .amount span { font-size: 0.4em; color: #7f8c8d; }
+        .bonus-badge { position: absolute; top: 15px; right: -30px; background: #27ae60; color: white; padding: 5px 40px; transform: rotate(45deg); font-size: 0.7em; font-weight: bold; }
+        .price-card ul { list-style: none; padding: 0; margin: 20px 0; }
+        .price-card li { padding: 8px 0; border-bottom: 1px solid #f1f1f1; font-size: 0.9em; }
+        .price-card li i { color: var(--blue); margin-right: 10px; }
 
-        .header h1 { margin: 0; font-size: 1.8rem; letter-spacing: 4px; color: var(--accent); text-shadow: 0 0 15px var(--accent-glow); }
-        .header p { margin: 5px 0 0; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
-
-        .tabs { display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
-
-        .tab-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 10px 20px;
+        /* Industry Configurator */
+        .configurator { background: var(--white); border-radius: 15px; display: flex; box-shadow: 0 15px 40px rgba(0,0,0,0.08); overflow: hidden; min-height: 600px; }
+        .industry-sidebar { width: 320px; background: var(--navy); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .industry-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 14px 18px;
             border-radius: 8px;
+            color: white;
             cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
+            text-align: left;
+            transition: all 0.2s;
+            display: flex; align-items: center; gap: 12px;
         }
+        .industry-btn i { width: 20px; text-align: center; color: var(--blue); }
+        .industry-btn:hover { background: rgba(255,255,255,0.15); transform: translateX(5px); }
+        .industry-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+        .industry-btn.active i { color: white; }
 
-        .tab-btn.active { background: var(--accent); color: white; box-shadow: 0 0 15px var(--accent-glow); border-color: var(--accent); }
+        .content-area { flex: 1; padding: 40px; }
+        .header-content { border-bottom: 2px solid var(--light-blue); padding-bottom: 20px; margin-bottom: 30px; }
+        .header-content h2 { margin: 0; color: var(--navy); }
+        .header-content p { color: #666; margin-top: 10px; }
 
-        .tab-content { display: none; width: 95%; max-width: 1200px; animation: slideUp 0.3s ease-out; }
-        .tab-content.active { display: block; }
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .feature-box { background: var(--bg); border-radius: 10px; padding: 20px; }
+        .feature-box.industry { background: var(--light-blue); }
+        .feature-box h4 { margin-top: 0; font-size: 0.8em; text-transform: uppercase; color: var(--navy); letter-spacing: 1px; }
+        .feature-box ul { padding-left: 20px; margin: 0; }
+        .feature-box li { margin-bottom: 10px; font-size: 0.95em; }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .premium-footer { margin-top: 30px; padding: 20px; background: #fffcf0; border: 1px dashed var(--sage-gold); border-radius: 10px; display: flex; align-items: center; gap: 15px; }
+        .premium-footer i { color: var(--sage-gold); font-size: 1.5em; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
-
-        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-        .card h3 { margin: 0 0 15px; font-size: 1.1rem; display: flex; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-
-        /* Kolory Sekcji */
-        .card-system h3 { color: var(--danger); }
-        .card-diagnostics h3 { color: var(--warning); }
-        .card-crm h3 { color: var(--success); }
-        .card-wp h3 { color: var(--purple); }
-
-        .cmd-row { display: flex; align-items: center; background: rgba(0,0,0,0.25); padding: 10px; margin: 8px 0; border-radius: 6px; border: 1px solid transparent; transition: 0.2s; }
-        .cmd-row:hover { border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.02); }
-
-        .cmd-name { font-family: 'Consolas', monospace; font-weight: bold; min-width: 140px; font-size: 0.9rem; color: var(--accent); }
-        .cmd-desc { flex-grow: 1; font-size: 0.8rem; color: var(--text-muted); padding: 0 10px; }
-
-        .copy-btn {
-            background: none;
-            border: 1px solid var(--text-muted);
-            color: var(--text-muted);
-            padding: 5px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.7rem;
-            font-weight: bold;
-            transition: 0.2s;
-            text-transform: uppercase;
+        @media (max-width: 900px) {
+            .configurator { flex-direction: column; }
+            .industry-sidebar { width: auto; flex-direction: row; overflow-x: auto; }
+            .industry-btn { white-space: nowrap; }
         }
-
-        .copy-btn:hover { border-color: white; color: white; background: rgba(255,255,255,0.1); }
-        .copy-btn.active-btn { background: var(--accent); border-color: var(--accent); color: white; }
-
-        /* HISTORY LOG */
-        .history-container { width: 95%; max-width: 1200px; margin-top: 40px; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 20px; }
-        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-        .history-header h4 { margin: 0; color: var(--accent); letter-spacing: 1px; }
-        .history-list { max-height: 350px; overflow-y: auto; margin: 0; padding: 0; list-style: none; }
-        .history-item { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-family: 'Consolas', monospace; font-size: 0.85rem; display: flex; align-items: center; }
-        .hist-time { color: var(--text-muted); min-width: 180px; font-size: 0.75rem; }
-        .hist-dot { width: 8px; height: 8px; border-radius: 50%; margin-right: 15px; flex-shrink: 0; }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1><i class="fas fa-gem"></i> FLOWQUEST OS v10.2</h1>
-    <p>Ultimate VPS Control Suite</p>
-</div>
+<div class="container">
+    <header>
+        <h1>FlowQuest <span>OS</span></h1>
+        <p>Twoja architektura sukcesu. Modułowy system operacyjny dla małego biznesu.</p>
+    </header>
 
-<div class="tabs">
-    <button class="tab-btn active" onclick="openTab('sys-tab', event)"><i class="fas fa-microchip"></i> SYSTEM</button>
-    <button class="tab-btn" onclick="openTab('crm-tab', event)"><i class="fas fa-users-cog"></i> PERFEX CRM</button>
-    <button class="tab-btn" onclick="openTab('wp-tab', event)"><i class="fab fa-wordpress"></i> WORDPRESS</button>
-    <button class="tab-btn" onclick="openTab('diag-tab', event)"><i class="fas fa-stethoscope"></i> DIAGNOSTYKA</button>
-</div>
-
-<div id="sys-tab" class="tab-content active">
-    <div class="grid">
-        <div class="card card-system">
-            <h3><i class="fas fa-life-ring"></i> System Restore</h3>
-            <div class="cmd-row"><span class="cmd-name">system-save</span><span class="cmd-desc">Zrzut Złotego Obrazu serwera</span><button class="copy-btn" onclick="copy('system-save', 'var(--danger)')">Copy</button></div>
-            <div class="cmd-row"><span class="cmd-name">system-restore</span><span class="cmd-desc">Powrót do Złotego Punktu</span><button class="copy-btn" onclick="copy('system-restore', 'var(--danger)')">Copy</button></div>
+    <div class="pricing-grid">
+        <div class="price-card">
+            <div class="bonus-badge">PIONIER 30</div>
+            <h3>Solo Basic</h3>
+            <div class="amount">19<span>PLN / mc</span></div>
+            <ul>
+                <li><i class="fa-solid fa-check"></i> CRM Core & Zadania</li>
+                <li><i class="fa-solid fa-check"></i> Faktury PDF & KSeF</li>
+                <li><i class="fa-solid fa-check"></i> <b>Gratis: Kreator Stron (LP)</b></li>
+                <li><i class="fa-solid fa-check"></i> Lista TODO & Filtry</li>
+            </ul>
         </div>
-        <div class="card card-crm">
-            <h3><i class="fas fa-archive"></i> Global Backup</h3>
-            <div class="cmd-row"><span class="cmd-name">backup</span><span class="cmd-desc">Pełna paczka ZIP (WWW + SQL)</span><button class="copy-btn" onclick="copy('backup', 'var(--success)')">Copy</button></div>
-            <div class="cmd-row"><span class="cmd-name">flow-help</span><span class="cmd-desc">Instrukcja komend w terminalu</span><button class="copy-btn" onclick="copy('flow-help', 'var(--accent)')">Copy</button></div>
+        <div class="price-card featured">
+            <h3>Solo Better</h3>
+            <div class="amount">39<span>PLN / mc</span></div>
+            <ul>
+                <li><i class="fa-solid fa-circle-plus"></i> Wszystko w Solo Basic</li>
+                <li><i class="fa-solid fa-check"></i> <b>Synchronizacja Formularzy</b></li>
+                <li><i class="fa-solid fa-check"></i> Czat Firmowy (Real-time)</li>
+                <li><i class="fa-solid fa-check"></i> Szablony Email (Branding)</li>
+            </ul>
+        </div>
+        <div class="price-card">
+            <h3>Solo Full</h3>
+            <div class="amount">59<span>PLN / mc</span></div>
+            <ul>
+                <li><i class="fa-solid fa-circle-plus"></i> Wszystko w Solo Better</li>
+                <li><i class="fa-solid fa-bolt"></i> <b>Asystent AI (GPT Integration)</b></li>
+                <li><i class="fa-solid fa-check"></i> Arkusze Online (Excel w CRM)</li>
+                <li><i class="fa-solid fa-check"></i> Zaawansowane Statusy</li>
+            </ul>
         </div>
     </div>
-</div>
 
-<div id="crm-tab" class="tab-content">
-    <div class="grid">
-        <div class="card card-crm">
-            <h3><i class="fas fa-camera"></i> Snapshoty CRM</h3>
-            <div class="cmd-row"><span class="cmd-name">crm-snapshot</span><span class="cmd-desc">Szybki zapis stanu CRM</span><button class="copy-btn" onclick="copy('crm-snapshot', 'var(--success)')">Copy</button></div>
-            <div class="cmd-row"><span class="cmd-name">crm-rollback</span><span class="cmd-desc">Przywróć stan CRM</span><button class="copy-btn" onclick="copy('crm-rollback', 'var(--success)')">Copy</button></div>
+    <div class="configurator">
+        <div class="industry-sidebar">
+            <button class="industry-btn active" onclick="updateUI('hvac', this)"><i class="fa-solid fa-tools"></i> HVAC / Serwis</button>
+            <button class="industry-btn" onclick="updateUI('construction', this)"><i class="fa-solid fa-helmet-safety"></i> Budownictwo</button>
+            <button class="industry-btn" onclick="updateUI('medical', this)"><i class="fa-solid fa-stethoscope"></i> Medycyna</button>
+            <button class="industry-btn" onclick="updateUI('law', this)"><i class="fa-solid fa-gavel"></i> Kancelarie</button>
+            <button class="industry-btn" onclick="updateUI('ai', this)"><i class="fa-solid fa-microchip"></i> Agencje AI</button>
+            <button class="industry-btn" onclick="updateUI('logistics', this)"><i class="fa-solid fa-truck"></i> Logistyka</button>
+            <button class="industry-btn" onclick="updateUI('realestate', this)"><i class="fa-solid fa-house-chimney"></i> Nieruchomości</button>
+            <button class="industry-btn" onclick="updateUI('ecommerce', this)"><i class="fa-solid fa-cart-shopping"></i> E-commerce</button>
+            <button class="industry-btn" onclick="updateUI('fitness', this)"><i class="fa-solid fa-dumbbell"></i> Fitness</button>
+            <button class="industry-btn" onclick="updateUI('beauty', this)"><i class="fa-solid fa-sparkles"></i> Beauty</button>
         </div>
-        <div class="card card-diagnostics">
-            <h3><i class="fas fa-database"></i> Baza SQL CRM</h3>
-            <div class="cmd-row"><span class="cmd-name">db-crm-exp</span><span class="cmd-desc">Eksport bazy do folderu WWW</span><button class="copy-btn" onclick="copy('db-crm-exp', 'var(--warning)')">Copy</button></div>
-            <div class="cmd-row"><span class="cmd-name">db-crm-imp</span><span class="cmd-desc">Import bazy z folderu WWW</span><button class="copy-btn" onclick="copy('db-crm-imp', 'var(--warning)')">Copy</button></div>
-        </div>
-        <div class="card card-crm">
-            <h3><i class="fas fa-tools"></i> Konserwacja</h3>
-            <div class="cmd-row"><span class="cmd-name">crm-clean</span><span class="cmd-desc">Cache, Sesje i Uprawnienia</span><button class="copy-btn" onclick="copy('crm-clean', 'var(--success)')">Copy</button></div>
-            <div class="cmd-row"><span class="cmd-name">crm-errors</span><span class="cmd-desc">Logi błędów Perfex CRM</span><button class="copy-btn" onclick="copy('crm-errors', 'var(--success)')">Copy</button></div>
-        </div>
-    </div>
-</div>
 
-<div id="wp-tab" class="tab-content">
-    <div class="grid">
-        <div class="card card-wp">
-            <h3><i class="fas fa-camera"></i> Snapshoty WP</h3>
-            <div class="cmd-row"><span class="cmd-name">wp-snapshot</span><span class="cmd-desc">Zapisz stan WordPress</span><button class="copy-btn" onclick="copy('wp-snapshot', 'var(--purple)')">Copy</button></div>
-            <div class="cmd-row"><span class="cmd-name">wp-rollback</span><span class="cmd-desc">Przywróć stan WordPress</span><button class="copy-btn" onclick="copy('wp-rollback', 'var(--purple)')">Copy</button></div>
-        </div>
-        <div class="card card-diagnostics">
-            <h3><i class="fas fa-database"></i> Baza SQL WP</h3>
-            <div class="cmd-row"><span class="cmd-name">db-wp-exp</span><span class="cmd-desc">Eksport bazy danych WP</span><button class="copy-btn" onclick="copy('db-wp-exp', 'var(--warning)')">Copy</button></div>
-            <div class="cmd-row"><span class="cmd-name">db-wp-imp</span><span class="cmd-desc">Import bazy danych WP</span><button class="copy-btn" onclick="copy('db-wp-imp', 'var(--warning)')">Copy</button></div>
-        </div>
-        <div class="card card-wp">
-            <h3><i class="fas fa-magic"></i> WP Tools</h3>
-            <div class="cmd-row"><span class="cmd-name">wp-clean</span><span class="cmd-desc">Czyszczenie cache WP</span><button class="copy-btn" onclick="copy('wp-clean', 'var(--purple)')">Copy</button></div>
-            <div class="cmd-row"><span class="cmd-name">wp-errors</span><span class="cmd-desc">Debug log WordPress</span><button class="copy-btn" onclick="copy('wp-errors', 'var(--purple)')">Copy</button></div>
-        </div>
+        <div class="content-area" id="display">
+            </div>
     </div>
-</div>
 
-<div id="diag-tab" class="tab-content">
-    <div class="grid">
-        <div class="card card-diagnostics">
-            <h3><i class="fas fa-stethoscope"></i> Status & Logi</h3>
-            <div class="cmd-row"><span class="cmd-name">all-errors</span><span class="cmd-desc">Logi zbiorcze (Nginx/CRM/WP)</span><button class="copy-btn" onclick="copy('all-errors', 'var(--warning)')">Copy</button></div>
-            <div class="cmd-row"><span class="cmd-name">flow-test</span><span class="cmd-desc">Testowanie usług (Self-Check)</span><button class="copy-btn" onclick="copy('flow-test', 'var(--warning)')">Copy</button></div>
-            <div class="cmd-row"><span class="cmd-name">server-errors</span><span class="cmd-desc">Logi błędów Nginx/PHP</span><button class="copy-btn" onclick="copy('server-errors', 'var(--warning)')">Copy</button></div>
-        </div>
-        <div class="card card-diagnostics">
-            <h3><i class="fas fa-eye"></i> Live Monitoring</h3>
-            <div class="cmd-row"><span class="cmd-name">logs-server</span><span class="cmd-desc">Błędy Nginx na żywo</span><button class="copy-btn" onclick="copy('logs-server', 'var(--warning)')">Copy</button></div>
-            <div class="cmd-row"><span class="cmd-name">logs-crm</span><span class="cmd-desc">Błędy CRM na żywo</span><button class="copy-btn" onclick="copy('logs-crm', 'var(--warning)')">Copy</button></div>
-            <div class="cmd-row"><span class="cmd-name">logs-wp</span><span class="cmd-desc">Błędy WP na żywo</span><button class="copy-btn" onclick="copy('logs-wp', 'var(--warning)')">Copy</button></div>
-        </div>
-    </div>
-</div>
-
-<div class="history-container">
-    <div class="history-header">
-        <h4><i class="fas fa-history"></i> PERSISTENT ACTIVITY LOG</h4>
-        <button style="background:none; border:1px solid var(--danger); color:var(--danger); cursor:pointer; padding:4px 10px; border-radius:4px; font-size: 0.7rem;" onclick="clearLogs()">WYCZYŚĆ</button>
-    </div>
-    <ul class="history-list" id="log-list"></ul>
+    <footer style="text-align: center; padding: 40px; color: #95a5a6; font-size: 0.8em;">
+        FlowQuest OS - Wszystkie prawa zastrzeżone 2026. Zbudowane na stacku Perfex CRM.
+    </footer>
 </div>
 
 <script>
-    function openTab(tabId, event) {
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        event.currentTarget.classList.add('active');
-    }
-
-    window.onload = function() {
-        const savedLogs = localStorage.getItem('flowquest_v10_logs');
-        if (savedLogs) { document.getElementById('log-list').innerHTML = savedLogs; }
-    }
-
-    function copy(text, color) {
-        navigator.clipboard.writeText(text);
-        const now = new Date();
-        const timestamp = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
-        const logList = document.getElementById('log-list');
-        
-        const li = document.createElement('li');
-        li.className = 'history-item';
-        li.innerHTML = `
-            <span class="hist-time">${timestamp}</span>
-            <div class="hist-dot" style="background:${color}; box-shadow: 0 0 10px ${color}"></div>
-            <span style="color:${color}; font-weight:bold;">${text}</span>
-        `;
-        
-        logList.prepend(li);
-        localStorage.setItem('flowquest_v10_logs', logList.innerHTML);
-
-        const btn = event.target;
-        btn.classList.add('active-btn');
-        const originalText = btn.innerText;
-        btn.innerText = "COPIED";
-        setTimeout(() => { 
-            btn.innerText = originalText; 
-            btn.classList.remove('active-btn');
-        }, 800);
-    }
-
-    function clearLogs() {
-        if(confirm("Czy na pewno wyczyścić całą historię?")) {
-            localStorage.removeItem('flowquest_v10_logs');
-            document.getElementById('log-list').innerHTML = '';
+    const industries = {
+        hvac: {
+            title: "HVAC / Serwis Techniczny",
+            desc: "Koniec z gubieniem części i narzędzi. Pełna ewidencja mobilnego magazynu.",
+            core_list: ["CRM & Projekty", "Fakturowanie KSeF", "UX Patch (Czysty widok)", "Lista To-Do"],
+            ind_list: [
+                "<b>Zarządzanie Majatkiem:</b> Sprzęt przypisany do aut.",
+                "<b>Magazyn:</b> Stany części zamiennych na aucie.",
+                "<b>Karty Czasu Pracy:</b> Rozliczanie czasu u klienta."
+            ],
+            extra: "<b>Moduł Finanse:</b> Precyzyjne liczenie marży na materiałach."
+        },
+        construction: {
+            title: "Budownictwo i Remonty",
+            desc: "Panuj nad obłożeniem ekip i terminami na wielu budowach jednocześnie.",
+            core_list: ["Zarządzanie Projektami", "Faktury Etapowe", "Kreator PDF", "Zadania"],
+            ind_list: [
+                "<b>Staff Workload:</b> Graficzne obłożenie ludzi.",
+                "<b>Zarządzanie Majatkiem:</b> Monitoring maszyn.",
+                "<b>HRM:</b> Baza danych o podwykonawcach."
+            ],
+            extra: "<b>Moduł Rekrutacja:</b> Szybkie pozyskiwanie nowych ekip."
+        },
+        medical: {
+            title: "Kliniki i Gabinety",
+            desc: "Zautomatyzuj zapisy i skup się na pacjencie, nie na telefonie.",
+            core_list: ["Baza Pacjentów", "Zgody RODO", "Kalendarz", "Powiadomienia"],
+            ind_list: [
+                "<b>Rezerwacje Spotkań:</b> Booking online 24/7.",
+                "<b>Ankiety:</b> Wywiad medyczny przed wizytą.",
+                "<b>Czat:</b> Komunikacja lekarz-recepcja."
+            ],
+            extra: "<b>Wiki:</b> Procedury zabiegowe i standardy placówki."
+        },
+        law: {
+            title: "Kancelarie Prawne",
+            desc: "Bezpieczna baza wiedzy i kontrola nad relacjami z kluczowymi klientami.",
+            core_list: ["Archiwum Akt", "Rejestr Czasu", "Faktury", "Maile"],
+            ind_list: [
+                "<b>Planowanie Kluczowych Klientów:</b> Priorytety VIP.",
+                "<b>Wiki:</b> Baza orzecznictwa i wzorów pism.",
+                "<b>Arkusze Online:</b> Zestawienia kosztów w CRM."
+            ],
+            extra: "<b>Powiadomienia Telegram:</b> Alerty o terminach sądowych."
+        },
+        ai: {
+            title: "Agencje AI / Technologiczne",
+            desc: "Pokaż klientom przyszłość. System w pełni zintegrowany z AI.",
+            core_list: ["Agile Boards", "API REST", "Dokumentacja", "Timesheets"],
+            ind_list: [
+                "<b>Asystent AI:</b> Automatyczne drafty ofert.",
+                "<b>API REST:</b> Łączenie z narzędziami klienta.",
+                "<b>Własny JavaScript:</b> Pełna personalizacja logiki."
+            ],
+            extra: "<b>Automatyzacje:</b> Flowy między zadaniami."
+        },
+        logistics: {
+            title: "Logistyka / Transport",
+            desc: "Zarządzaj flotą i komunikatami dla kierowców w jednym kokpicie.",
+            core_list: ["Kontrahenci", "Zadania", "Raporty CSV", "Faktury"],
+            ind_list: [
+                "<b>Zarządzanie Majątkiem:</b> Przeglądy i serwisy floty.",
+                "<b>Rejestr Połączeń:</b> Dokumentacja ustaleń.",
+                "<b>Niestandardowe Powiadomienia:</b> SMS do kierowców."
+            ],
+            extra: "<b>Powiadomienia Telegram:</b> Statusy przesyłek."
+        },
+        realestate: {
+            title: "Nieruchomości",
+            desc: "Szybkie Landing Page dla ofert i automatyczne zbieranie leadów z FB.",
+            core_list: ["Leady", "Kalendarz Prezentacji", "Kontrakty", "Chat"],
+            ind_list: [
+                "<b>Kreator Stron:</b> Strona dla każdej nieruchomości.",
+                "<b>Integracja FB Leads:</b> Automatyczny import chętnych.",
+                "<b>Telegram Chat:</b> Szybki kontakt z agentem."
+            ],
+            extra: "<b>Opinie Klientów:</b> Budowanie marki agenta."
+        },
+        ecommerce: {
+            title: "E-commerce Sync",
+            desc: "Połącz swój sklep WooCommerce z potęgą CRM i Magazynu.",
+            core_list: ["Klienci", "Zamówienia", "Płatności online", "Newsletter"],
+            ind_list: [
+                "<b>Integracja WooCommerce:</b> Synchronizacja 2-way.",
+                "<b>Magazyn:</b> Kontrola stanów towarowych.",
+                "<b>Omni Sales:</b> Raportowanie wielokanałowe."
+            ],
+            extra: "<b>Bramka iDEAL / Stripe:</b> Szybkie płatności."
+        },
+        fitness: {
+            title: "Fitness / Trenerzy",
+            desc: "Śledź postępy podopiecznych i zapełniaj grafik treningowy.",
+            core_list: ["Baza członków", "Płatności", "Zadania", "Ankiety"],
+            ind_list: [
+                "<b>Cele & OKR:</b> Wyniki siłowe i wagowe.",
+                "<b>Rezerwacje:</b> Grafik treningów grupowych.",
+                "<b>Asystent AI:</b> Generowanie planów diety."
+            ],
+            extra: "<b>Style Motywu:</b> Branding Twojego studia."
+        },
+        beauty: {
+            title: "Beauty / Estetyka",
+            desc: "Zadbaj o wizerunek i lojalność klientek dzięki opiniom i bookingom.",
+            core_list: ["Portfolio", "Kalendarz wizyt", "Opinie", "Faktury"],
+            ind_list: [
+                "<b>Rezerwacje Spotkań:</b> Samodzielny zapis online.",
+                "<b>Opinie Klientów:</b> Automatyczne zbieranie ocen.",
+                "<b>Kreator Szablonów Email:</b> Promocje sezonowe."
+            ],
+            extra: "<b>Powiadomienia Telegram:</b> Natychmiastowe info o nowej wizycie."
         }
+    };
+
+    function updateUI(id, btn) {
+        document.querySelectorAll('.industry-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const data = industries[id];
+        const html = `
+            <div class="header-content">
+                <h2>${data.title}</h2>
+                <p>${data.desc}</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <h4><i class="fa-solid fa-cube"></i> Core (Płyta Główna)</h4>
+                    <ul>
+                        ${data.core_list.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="feature-box industry">
+                    <h4><i class="fa-solid fa-puzzle-piece"></i> Moduły Branżowe</h4>
+                    <ul>
+                        ${data.ind_list.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+            <div class="premium-footer">
+                <i class="fa-solid fa-crown"></i>
+                <div>
+                    <strong style="color:var(--sage-gold)">Opcja Premium (Add-on):</strong><br>
+                    <span>${data.extra}</span>
+                </div>
+            </div>
+        `;
+        document.getElementById('display').innerHTML = html;
     }
+
+    // Init
+    updateUI('hvac', document.querySelector('.industry-btn'));
 </script>
 
 </body>
