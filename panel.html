@@ -3,258 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowQuest OS - Ekosystem Biznesowy</title>
+    <title>FlowQuest OS - System Operacyjny Twojej Firmy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --navy: #1a2a3a;
             --blue: #007bff;
-            --light-blue: #e7f3ff;
-            --sage-gold: #c5a059;
-            --white: #ffffff;
-            --bg: #f4f7f9;
+            --light-blue: #eef6ff;
             --text: #2c3e50;
+            --gray: #7f8c8d;
+            --white: #ffffff;
+            --border: #dcdde1;
         }
 
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; line-height: 1.5; }
-        .container { max-width: 1200px; margin: auto; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #f8f9fb; color: var(--text); margin: 0; padding: 0; line-height: 1.6; }
+        .container { max-width: 1200px; margin: auto; padding: 20px; }
         
         /* Header */
-        header { text-align: center; padding: 40px 0; }
-        header h1 { color: var(--navy); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
-        header span { color: var(--blue); }
+        .hero { text-align: center; padding: 60px 20px; background: var(--navy); color: var(--white); margin-bottom: 40px; border-bottom: 5px solid var(--blue); }
+        .hero h1 { font-size: 2.5em; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
+        .hero span { color: var(--blue); }
+        .hero p { opacity: 0.8; font-size: 1.1em; max-width: 700px; margin: 20px auto 0; }
 
-        /* Solo Pricing Cards */
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 50px; }
-        .price-card { background: var(--white); border-radius: 12px; padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); position: relative; border-top: 4px solid var(--navy); overflow: hidden; }
-        .price-card.featured { border-top-color: var(--blue); transform: scale(1.03); z-index: 2; }
-        .price-card h3 { margin-top: 0; color: var(--navy); }
-        .price-card .amount { font-size: 2.5em; font-weight: 800; color: var(--navy); }
-        .price-card .amount span { font-size: 0.4em; color: #7f8c8d; }
-        .bonus-badge { position: absolute; top: 15px; right: -30px; background: #27ae60; color: white; padding: 5px 40px; transform: rotate(45deg); font-size: 0.7em; font-weight: bold; }
-        .price-card ul { list-style: none; padding: 0; margin: 20px 0; }
-        .price-card li { padding: 8px 0; border-bottom: 1px solid #f1f1f1; font-size: 0.9em; }
-        .price-card li i { color: var(--blue); margin-right: 10px; }
+        /* Section Titles */
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { color: var(--navy); text-transform: uppercase; font-size: 1.8em; margin-bottom: 10px; }
+        .section-title .line { width: 60px; height: 4px; background: var(--blue); margin: auto; }
+
+        /* Core Benefits Cards */
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 60px; }
+        .benefit-card { background: var(--white); padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; border-bottom: 3px solid transparent; }
+        .benefit-card:hover { transform: translateY(-5px); border-bottom-color: var(--blue); }
+        .benefit-card i { font-size: 2.5em; color: var(--blue); margin-bottom: 20px; }
+        .benefit-card h3 { color: var(--navy); margin-top: 0; }
+
+        /* Core Features List */
+        .core-details { background: var(--white); padding: 40px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 60px; }
+        .core-list { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .core-item { display: flex; gap: 15px; }
+        .core-item i { color: var(--blue); font-size: 1.2em; margin-top: 5px; }
+        .core-item h4 { margin: 0 0 5px 0; color: var(--navy); }
+        .core-item p { margin: 0; font-size: 0.9em; color: var(--gray); }
 
         /* Industry Configurator */
-        .configurator { background: var(--white); border-radius: 15px; display: flex; box-shadow: 0 15px 40px rgba(0,0,0,0.08); overflow: hidden; min-height: 600px; }
-        .industry-sidebar { width: 320px; background: var(--navy); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+        .configurator { background: var(--white); border-radius: 15px; display: flex; box-shadow: 0 15px 40px rgba(0,0,0,0.08); overflow: hidden; margin-bottom: 60px; border: 1px solid var(--border); }
+        .industry-sidebar { width: 300px; background: #f1f2f6; padding: 15px; display: flex; flex-direction: column; gap: 5px; border-right: 1px solid var(--border); }
         .industry-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 14px 18px;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s;
-            display: flex; align-items: center; gap: 12px;
+            background: transparent; border: none; padding: 15px; border-radius: 8px; color: var(--navy); cursor: pointer; text-align: left;
+            transition: 0.2s; display: flex; align-items: center; gap: 10px; font-weight: 600;
         }
-        .industry-btn i { width: 20px; text-align: center; color: var(--blue); }
-        .industry-btn:hover { background: rgba(255,255,255,0.15); transform: translateX(5px); }
-        .industry-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
-        .industry-btn.active i { color: white; }
+        .industry-btn i { width: 25px; color: var(--blue); }
+        .industry-btn:hover { background: var(--white); transform: translateX(5px); }
+        .industry-btn.active { background: var(--blue); color: var(--white); }
+        .industry-btn.active i { color: var(--white); }
 
-        .content-area { flex: 1; padding: 40px; }
-        .header-content { border-bottom: 2px solid var(--light-blue); padding-bottom: 20px; margin-bottom: 30px; }
-        .header-content h2 { margin: 0; color: var(--navy); }
-        .header-content p { color: #666; margin-top: 10px; }
+        .content-area { flex: 1; padding: 40px; min-height: 450px; }
+        .feature-box { background: var(--light-blue); border-radius: 10px; padding: 25px; border-left: 5px solid var(--blue); }
+        .feature-box h4 { margin-top: 0; text-transform: uppercase; color: var(--navy); font-size: 0.9em; letter-spacing: 1px; }
 
-        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .feature-box { background: var(--bg); border-radius: 10px; padding: 20px; }
-        .feature-box.industry { background: var(--light-blue); }
-        .feature-box h4 { margin-top: 0; font-size: 0.8em; text-transform: uppercase; color: var(--navy); letter-spacing: 1px; }
-        .feature-box ul { padding-left: 20px; margin: 0; }
-        .feature-box li { margin-bottom: 10px; font-size: 0.95em; }
-
-        .premium-footer { margin-top: 30px; padding: 20px; background: #fffcf0; border: 1px dashed var(--sage-gold); border-radius: 10px; display: flex; align-items: center; gap: 15px; }
-        .premium-footer i { color: var(--sage-gold); font-size: 1.5em; }
+        /* Plugin Table */
+        .plugin-section { background: var(--navy); color: var(--white); padding: 60px 20px; border-radius: 20px; }
+        .plugin-table-container { overflow-x: auto; margin-top: 30px; }
+        table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.05); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { color: var(--blue); text-transform: uppercase; font-size: 0.8em; }
+        tr:hover { background: rgba(255,255,255,0.08); }
 
         @media (max-width: 900px) {
             .configurator { flex-direction: column; }
             .industry-sidebar { width: auto; flex-direction: row; overflow-x: auto; }
-            .industry-btn { white-space: nowrap; }
+            .core-list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
+<section class="hero">
+    <div class="container">
         <h1>FlowQuest <span>OS</span></h1>
-        <p>Twoja architektura sukcesu. Modułowy system operacyjny dla małego biznesu.</p>
-    </header>
+        <p>Precyzyjna architektura procesów dla mikro i małych firm. Odzyskaj kontrolę, wyeliminuj chaos, zacznij skalować.</p>
+    </div>
+</section>
 
-    <div class="pricing-grid">
-        <div class="price-card">
-            <div class="bonus-badge">PIONIER 30</div>
-            <h3>Solo Basic</h3>
-            <div class="amount">19<span>PLN / mc</span></div>
-            <ul>
-                <li><i class="fa-solid fa-check"></i> CRM Core & Zadania</li>
-                <li><i class="fa-solid fa-check"></i> Faktury PDF & KSeF</li>
-                <li><i class="fa-solid fa-check"></i> <b>Gratis: Kreator Stron (LP)</b></li>
-                <li><i class="fa-solid fa-check"></i> Lista TODO & Filtry</li>
-            </ul>
+<div class="container">
+    
+    <div class="section-title">
+        <h2>Korzyści z wdrożenia <span style="color:var(--blue)">Core</span></h2>
+        <div class="line"></div>
+    </div>
+
+    <div class="benefits-grid">
+        <div class="benefit-card">
+            <i class="fa-solid fa-crosshairs"></i>
+            <h3>Jedno źródło prawdy</h3>
+            <p>Koniec z rozproszonymi danymi w Excelach, mailach i notatnikach. Wszystkie informacje o klientach i projektach są w jednym, bezpiecznym miejscu.</p>
         </div>
-        <div class="price-card featured">
-            <h3>Solo Better</h3>
-            <div class="amount">39<span>PLN / mc</span></div>
-            <ul>
-                <li><i class="fa-solid fa-circle-plus"></i> Wszystko w Solo Basic</li>
-                <li><i class="fa-solid fa-check"></i> <b>Synchronizacja Formularzy</b></li>
-                <li><i class="fa-solid fa-check"></i> Czat Firmowy (Real-time)</li>
-                <li><i class="fa-solid fa-check"></i> Szablony Email (Branding)</li>
-            </ul>
+        <div class="benefit-card">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <h3>Oszczędność czasu</h3>
+            <p>Automatyzacja powtarzalnych czynności – od wystawiania faktur po przypomnienia o zadaniach. Zyskujesz średnio 8-12 godzin tygodniowo na rozwój biznesu.</p>
         </div>
-        <div class="price-card">
-            <h3>Solo Full</h3>
-            <div class="amount">59<span>PLN / mc</span></div>
-            <ul>
-                <li><i class="fa-solid fa-circle-plus"></i> Wszystko w Solo Better</li>
-                <li><i class="fa-solid fa-bolt"></i> <b>Asystent AI (GPT Integration)</b></li>
-                <li><i class="fa-solid fa-check"></i> Arkusze Online (Excel w CRM)</li>
-                <li><i class="fa-solid fa-check"></i> Zaawansowane Statusy</li>
-            </ul>
+        <div class="benefit-card">
+            <i class="fa-solid fa-chart-line"></i>
+            <h3>Profesjonalny wizerunek</h3>
+            <p>Klient otrzymuje estetyczne oferty i faktury, ma dostęp do własnego panelu i widzi, że pracuje z nowoczesną, zorganizowaną firmą.</p>
         </div>
+    </div>
+
+    <div class="core-details">
+        <h3 style="color:var(--navy); margin-top:0; border-bottom: 1px solid #eee; padding-bottom: 15px;">Funkcje Systemu Core (Standard)</h3>
+        <div class="core-list">
+            <div class="core-item">
+                <i class="fa-solid fa-users"></i>
+                <div>
+                    <h4>Zarządzanie Relacjami (CRM)</h4>
+                    <p>Pełna historia kontaktu z klientem, baza leadów, segmentacja i szybkie wyszukiwanie.</p>
+                </div>
+            </div>
+            <div class="core-item">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                <div>
+                    <h4>Finanse i Faktury</h4>
+                    <p>Wystawianie faktur PDF, obsługa e-Faktur KSeF, płatności online i śledzenie kosztów.</p>
+                </div>
+            </div>
+            <div class="core-item">
+                <i class="fa-solid fa-list-check"></i>
+                <div>
+                    <h4>Projekty i Zadania</h4>
+                    <p>Organizuj pracę zespołu, twórz kamienie milowe, przypisuj zadania i monitoruj czas pracy.</p>
+                </div>
+            </div>
+            <div class="core-item">
+                <i class="fa-solid fa-briefcase"></i>
+                <div>
+                    <h4>Oferty i Kosztorysy</h4>
+                    <p>Twórz piękne propozycje handlowe. Klient może je zaakceptować podpisem online bezpośrednio w systemie.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-title">
+        <h2>Rozszerzenia <span style="color:var(--blue)">Branżowe</span></h2>
+        <p>Wybierz swoją branżę, aby zobaczyć dedykowane moduły dodatkowe.</p>
+        <div class="line"></div>
     </div>
 
     <div class="configurator">
         <div class="industry-sidebar">
             <button class="industry-btn active" onclick="updateUI('hvac', this)"><i class="fa-solid fa-tools"></i> HVAC / Serwis</button>
-            <button class="industry-btn" onclick="updateUI('construction', this)"><i class="fa-solid fa-helmet-safety"></i> Budownictwo</button>
             <button class="industry-btn" onclick="updateUI('medical', this)"><i class="fa-solid fa-stethoscope"></i> Medycyna</button>
             <button class="industry-btn" onclick="updateUI('law', this)"><i class="fa-solid fa-gavel"></i> Kancelarie</button>
-            <button class="industry-btn" onclick="updateUI('ai', this)"><i class="fa-solid fa-microchip"></i> Agencje AI</button>
-            <button class="industry-btn" onclick="updateUI('logistics', this)"><i class="fa-solid fa-truck"></i> Logistyka</button>
-            <button class="industry-btn" onclick="updateUI('realestate', this)"><i class="fa-solid fa-house-chimney"></i> Nieruchomości</button>
+            <button class="industry-btn" onclick="updateUI('construction', this)"><i class="fa-solid fa-helmet-safety"></i> Budownictwo</button>
             <button class="industry-btn" onclick="updateUI('ecommerce', this)"><i class="fa-solid fa-cart-shopping"></i> E-commerce</button>
-            <button class="industry-btn" onclick="updateUI('fitness', this)"><i class="fa-solid fa-dumbbell"></i> Fitness</button>
-            <button class="industry-btn" onclick="updateUI('beauty', this)"><i class="fa-solid fa-sparkles"></i> Beauty</button>
+            <button class="industry-btn" onclick="updateUI('realestate', this)"><i class="fa-solid fa-house-chimney"></i> Nieruchomości</button>
         </div>
 
         <div class="content-area" id="display">
             </div>
     </div>
 
-    <footer style="text-align: center; padding: 40px; color: #95a5a6; font-size: 0.8em;">
-        FlowQuest OS - Wszystkie prawa zastrzeżone 2026. Zbudowane na stacku Perfex CRM.
-    </footer>
+    <div class="plugin-section">
+        <div class="section-title">
+            <h2 style="color:white">Pełna Biblioteka Rozwiązań</h2>
+            <p style="color:rgba(255,255,255,0.6)">FlowQuest OS to ekosystem 57 potężnych wtyczek, które możemy dowolnie konfigurować.</p>
+            <div class="line"></div>
+        </div>
+
+        <div class="plugin-table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kategoria</th>
+                        <th>Moduł</th>
+                        <th>Kluczowa Wartość</th>
+                    </tr>
+                </thead>
+                <tbody id="plugin-table-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
 
 <script>
     const industries = {
         hvac: {
             title: "HVAC / Serwis Techniczny",
-            desc: "Koniec z gubieniem części i narzędzi. Pełna ewidencja mobilnego magazynu.",
-            core_list: ["CRM & Projekty", "Fakturowanie KSeF", "UX Patch (Czysty widok)", "Lista To-Do"],
-            ind_list: [
-                "<b>Zarządzanie Majatkiem:</b> Sprzęt przypisany do aut.",
-                "<b>Magazyn:</b> Stany części zamiennych na aucie.",
-                "<b>Karty Czasu Pracy:</b> Rozliczanie czasu u klienta."
-            ],
-            extra: "<b>Moduł Finanse:</b> Precyzyjne liczenie marży na materiałach."
-        },
-        construction: {
-            title: "Budownictwo i Remonty",
-            desc: "Panuj nad obłożeniem ekip i terminami na wielu budowach jednocześnie.",
-            core_list: ["Zarządzanie Projektami", "Faktury Etapowe", "Kreator PDF", "Zadania"],
-            ind_list: [
-                "<b>Staff Workload:</b> Graficzne obłożenie ludzi.",
-                "<b>Zarządzanie Majatkiem:</b> Monitoring maszyn.",
-                "<b>HRM:</b> Baza danych o podwykonawcach."
-            ],
-            extra: "<b>Moduł Rekrutacja:</b> Szybkie pozyskiwanie nowych ekip."
+            benefit: "Zarządzaj setkami części zamiennych i tysiącami złotych w sprzęcie bez wychodzenia z biura.",
+            modules: ["Moduł Magazyn (Stany na autach)", "Zarządzanie Majątkiem (Środki Trwałe)", "Karty Czasu Pracy", "Rezerwacje Spotkań"]
         },
         medical: {
-            title: "Kliniki i Gabinety",
-            desc: "Zautomatyzuj zapisy i skup się na pacjencie, nie na telefonie.",
-            core_list: ["Baza Pacjentów", "Zgody RODO", "Kalendarz", "Powiadomienia"],
-            ind_list: [
-                "<b>Rezerwacje Spotkań:</b> Booking online 24/7.",
-                "<b>Ankiety:</b> Wywiad medyczny przed wizytą.",
-                "<b>Czat:</b> Komunikacja lekarz-recepcja."
-            ],
-            extra: "<b>Wiki:</b> Procedury zabiegowe i standardy placówki."
+            title: "Medycyna i Estetyka",
+            benefit: "Zredukuj liczbę nieobecności na wizytach o 40% dzięki automatycznym rezerwacjom i przypomnieniom.",
+            modules: ["Appointly (Booking Online)", "Ankiety i Opinie Klientów", "Czat Real-time", "Powiadomienia Telegram"]
         },
         law: {
             title: "Kancelarie Prawne",
-            desc: "Bezpieczna baza wiedzy i kontrola nad relacjami z kluczowymi klientami.",
-            core_list: ["Archiwum Akt", "Rejestr Czasu", "Faktury", "Maile"],
-            ind_list: [
-                "<b>Planowanie Kluczowych Klientów:</b> Priorytety VIP.",
-                "<b>Wiki:</b> Baza orzecznictwa i wzorów pism.",
-                "<b>Arkusze Online:</b> Zestawienia kosztów w CRM."
-            ],
-            extra: "<b>Powiadomienia Telegram:</b> Alerty o terminach sądowych."
+            benefit: "Błyskawiczny dostęp do bazy orzecznictwa i pełna historia maili zintegrowana z aktami sprawy.",
+            modules: ["Planowanie Kluczowych Klientów", "Wewnętrzna Wiki (Baza Wiedzy)", "Arkusze Online", "Skrzynka Odbiorcza CRM"]
         },
-        ai: {
-            title: "Agencje AI / Technologiczne",
-            desc: "Pokaż klientom przyszłość. System w pełni zintegrowany z AI.",
-            core_list: ["Agile Boards", "API REST", "Dokumentacja", "Timesheets"],
-            ind_list: [
-                "<b>Asystent AI:</b> Automatyczne drafty ofert.",
-                "<b>API REST:</b> Łączenie z narzędziami klienta.",
-                "<b>Własny JavaScript:</b> Pełna personalizacja logiki."
-            ],
-            extra: "<b>Automatyzacje:</b> Flowy między zadaniami."
-        },
-        logistics: {
-            title: "Logistyka / Transport",
-            desc: "Zarządzaj flotą i komunikatami dla kierowców w jednym kokpicie.",
-            core_list: ["Kontrahenci", "Zadania", "Raporty CSV", "Faktury"],
-            ind_list: [
-                "<b>Zarządzanie Majątkiem:</b> Przeglądy i serwisy floty.",
-                "<b>Rejestr Połączeń:</b> Dokumentacja ustaleń.",
-                "<b>Niestandardowe Powiadomienia:</b> SMS do kierowców."
-            ],
-            extra: "<b>Powiadomienia Telegram:</b> Statusy przesyłek."
-        },
-        realestate: {
-            title: "Nieruchomości",
-            desc: "Szybkie Landing Page dla ofert i automatyczne zbieranie leadów z FB.",
-            core_list: ["Leady", "Kalendarz Prezentacji", "Kontrakty", "Chat"],
-            ind_list: [
-                "<b>Kreator Stron:</b> Strona dla każdej nieruchomości.",
-                "<b>Integracja FB Leads:</b> Automatyczny import chętnych.",
-                "<b>Telegram Chat:</b> Szybki kontakt z agentem."
-            ],
-            extra: "<b>Opinie Klientów:</b> Budowanie marki agenta."
+        construction: {
+            title: "Budownictwo",
+            benefit: "Kontroluj marżę na każdym etapie budowy i zarządzaj obłożeniem wielu ekip jednocześnie.",
+            modules: ["Staff Workload (Obłożenie)", "Zaawansowane Statusy Zadań", "HRM & Profile HR", "Księgowość i Finanse"]
         },
         ecommerce: {
             title: "E-commerce Sync",
-            desc: "Połącz swój sklep WooCommerce z potęgą CRM i Magazynu.",
-            core_list: ["Klienci", "Zamówienia", "Płatności online", "Newsletter"],
-            ind_list: [
-                "<b>Integracja WooCommerce:</b> Synchronizacja 2-way.",
-                "<b>Magazyn:</b> Kontrola stanów towarowych.",
-                "<b>Omni Sales:</b> Raportowanie wielokanałowe."
-            ],
-            extra: "<b>Bramka iDEAL / Stripe:</b> Szybkie płatności."
+            benefit: "Jedno miejsce do zarządzania zamówieniami, klientami i stanem magazynowym wielu kanałów sprzedaży.",
+            modules: ["Integracja WooCommerce", "Omni Sales Dashboard", "Produkty & Magazyn", "Bramka iDEAL / Stripe"]
         },
-        fitness: {
-            title: "Fitness / Trenerzy",
-            desc: "Śledź postępy podopiecznych i zapełniaj grafik treningowy.",
-            core_list: ["Baza członków", "Płatności", "Zadania", "Ankiety"],
-            ind_list: [
-                "<b>Cele & OKR:</b> Wyniki siłowe i wagowe.",
-                "<b>Rezerwacje:</b> Grafik treningów grupowych.",
-                "<b>Asystent AI:</b> Generowanie planów diety."
-            ],
-            extra: "<b>Style Motywu:</b> Branding Twojego studia."
-        },
-        beauty: {
-            title: "Beauty / Estetyka",
-            desc: "Zadbaj o wizerunek i lojalność klientek dzięki opiniom i bookingom.",
-            core_list: ["Portfolio", "Kalendarz wizyt", "Opinie", "Faktury"],
-            ind_list: [
-                "<b>Rezerwacje Spotkań:</b> Samodzielny zapis online.",
-                "<b>Opinie Klientów:</b> Automatyczne zbieranie ocen.",
-                "<b>Kreator Szablonów Email:</b> Promocje sezonowe."
-            ],
-            extra: "<b>Powiadomienia Telegram:</b> Natychmiastowe info o nowej wizycie."
+        realestate: {
+            title: "Nieruchomości",
+            benefit: "Generuj 3x więcej leadów dzięki dedykowanym stronom ofertowym i automatycznemu importowi z Facebooka.",
+            modules: ["Wielostronicowy Landing Page", "Integracja Facebook Leads", "Czat Online", "Synchronizacja Formularzy"]
         }
     };
+
+    const allPlugins = [
+        ["Operacyjne", "Planowanie Klientów", "Rozwój relacji VIP i historia współpracy."],
+        ["Finanse", "Księgowość i Finanse", "Pełne raportowanie zysków i strat."],
+        ["Zadania", "Zaawansowane Statusy", "Niestandardowe ścieżki pracy (Workflow)."],
+        ["Infrastruktura", "API REST", "Możliwość połączenia z dowolnym systemem zewnętrznym."],
+        ["Sprzedaż", "Rezerwacje Spotkań", "Kalendarz online dla klientów końcowych."],
+        ["Logistyka", "Zarządzanie Majątkiem", "Ewidencja narzędzi, aut i sprzętu firmowego."],
+        ["Marketing", "Kreator Stron / LP", "Budowa stron sprzedażowych bez kodowania."],
+        ["Komunikacja", "Telegram Chat / SMS", "Natychmiastowe alerty o zdarzeniach w CRM."],
+        ["Logistyka", "Magazyn", "Ruch towarów, wydania zewnętrzne i stany."],
+        ["HR", "Staff Workload", "Wizualne planowanie pracy całego zespołu."],
+        ["Baza Wiedzy", "Wiki", "Twoje procedury firmowe w jednym miejscu."]
+    ];
 
     function updateUI(id, btn) {
         document.querySelectorAll('.industry-btn').forEach(b => b.classList.remove('active'));
@@ -263,36 +243,30 @@
         const data = industries[id];
         const html = `
             <div class="header-content">
-                <h2>${data.title}</h2>
-                <p>${data.desc}</p>
+                <h2 style="color:var(--navy); margin-top:0">${data.title}</h2>
+                <p style="color:var(--blue); font-weight:bold; font-size:1.1em; margin-bottom:20px;">Główna korzyść: ${data.benefit}</p>
             </div>
-            <div class="feature-grid">
-                <div class="feature-box">
-                    <h4><i class="fa-solid fa-cube"></i> Core (Płyta Główna)</h4>
-                    <ul>
-                        ${data.core_list.map(f => `<li>${f}</li>`).join('')}
-                    </ul>
-                </div>
-                <div class="feature-box industry">
-                    <h4><i class="fa-solid fa-puzzle-piece"></i> Moduły Branżowe</h4>
-                    <ul>
-                        ${data.ind_list.map(f => `<li>${f}</li>`).join('')}
-                    </ul>
-                </div>
+            <div class="feature-box">
+                <h4><i class="fa-solid fa-plus-circle"></i> Moduły Rozszerzające (W cenie pakietu)</h4>
+                <ul style="margin:0; padding-left:20px;">
+                    ${data.modules.map(m => `<li><b>${m}</b></li>`).join('')}
+                </ul>
             </div>
-            <div class="premium-footer">
-                <i class="fa-solid fa-crown"></i>
-                <div>
-                    <strong style="color:var(--sage-gold)">Opcja Premium (Add-on):</strong><br>
-                    <span>${data.extra}</span>
-                </div>
-            </div>
+            <p style="margin-top:20px; font-size:0.85em; color:var(--gray)">* Każdy pakiet zawiera wszystkie funkcje Core opisane powyżej.</p>
         `;
         document.getElementById('display').innerHTML = html;
     }
 
+    function loadPlugins() {
+        const tbody = document.getElementById('plugin-table-body');
+        allPlugins.forEach(p => {
+            tbody.innerHTML += `<tr><td>${p[0]}</td><td><b>${p[1]}</b></td><td>${p[2]}</td></tr>`;
+        });
+    }
+
     // Init
     updateUI('hvac', document.querySelector('.industry-btn'));
+    loadPlugins();
 </script>
 
 </body>
