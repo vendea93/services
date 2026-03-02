@@ -3,73 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowQuest OS - Kompendium Branżowe</title>
+    <title>FlowQuest OS - Kompendium Architekta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --navy: #0f172a;
-            --navy-light: #1e293b;
-            --blue: #3b82f6;
-            --blue-light: #eff6ff;
-            --text-main: #334155;
-            --text-muted: #64748b;
-            --white: #ffffff;
-            --border: #e2e8f0;
+            --primary: #4f46e5; /* Indigo */
+            --primary-light: #e0e7ff;
+            --secondary: #0ea5e9; /* Ocean Blue */
+            --bg-main: #f9fafb;
+            --bg-card: #ffffff;
+            --text-dark: #111827;
+            --text-body: #4b5563;
+            --text-muted: #9ca3af;
+            --border-color: #e5e7eb;
             --success: #10b981;
+            --danger: #ef4444;
+            --premium: #8b5cf6; /* Purple for addons */
         }
 
-        body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8fafc; color: var(--text-main); margin: 0; padding: 0; display: flex; height: 100vh; overflow: hidden; }
+        * { box-sizing: border-box; }
 
-        /* Sidebar / Tabs */
-        .sidebar { width: 320px; background: var(--navy); color: var(--white); display: flex; flex-direction: column; border-right: 1px solid var(--navy-light); overflow-y: auto; }
-        .sidebar-header { padding: 25px 20px; background: #0b1120; border-bottom: 1px solid var(--navy-light); }
-        .sidebar-header h1 { margin: 0; font-size: 1.2em; text-transform: uppercase; letter-spacing: 1px; color: var(--blue); }
-        .sidebar-header p { margin: 5px 0 0; font-size: 0.8em; color: var(--text-muted); }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-main); 
+            color: var(--text-body); 
+            margin: 0; 
+            display: flex; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
+        /* Sidebar - Accordion Layout */
+        .sidebar { 
+            width: 340px; 
+            background: var(--bg-card); 
+            border-right: 1px solid var(--border-color); 
+            display: flex; 
+            flex-direction: column; 
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.02);
+            z-index: 10;
+        }
         
-        .tab-list { list-style: none; padding: 0; margin: 0; }
-        .tab-btn { width: 100%; text-align: left; background: transparent; border: none; color: #cbd5e1; padding: 18px 20px; cursor: pointer; border-bottom: 1px solid var(--navy-light); transition: 0.3s; display: flex; align-items: center; gap: 12px; font-size: 0.95em; }
-        .tab-btn i { width: 20px; text-align: center; color: var(--text-muted); }
-        .tab-btn:hover { background: var(--navy-light); color: var(--white); }
-        .tab-btn.active { background: var(--blue); color: var(--white); font-weight: bold; border-left: 4px solid #60a5fa; }
-        .tab-btn.active i { color: var(--white); }
-
-        /* Main Content Area */
-        .main-content { flex: 1; overflow-y: auto; padding: 40px; background: #f8fafc; }
-        .content-wrapper { max-width: 1100px; margin: auto; }
-
-        /* Header Section */
-        .industry-header { margin-bottom: 30px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
-        .industry-header h2 { font-size: 2.2em; color: var(--navy); margin: 0 0 10px 0; }
-        .target-audience { display: inline-block; background: var(--blue-light); color: var(--blue); padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 15px; }
-        .short-desc { font-size: 1.1em; color: var(--text-muted); line-height: 1.6; margin: 0; }
-
-        /* Grid Layout */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
+        .sidebar-header { 
+            padding: 30px 25px; 
+            border-bottom: 1px solid var(--border-color); 
+            background: linear-gradient(to right, #ffffff, #f9fafb);
+            flex-shrink: 0;
+        }
         
-        /* Cards */
-        .card { background: var(--white); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid var(--border); }
-        .card h3 { margin-top: 0; color: var(--navy); font-size: 1.1em; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 20px; }
-        .card h3 i { color: var(--blue); }
+        .sidebar-header h1 { margin: 0; font-size: 1.4em; font-weight: 800; color: var(--text-dark); letter-spacing: -0.5px; }
+        .sidebar-header h1 span { color: var(--primary); }
+        .sidebar-header p { margin: 8px 0 0; font-size: 0.85em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        
+        /* Accordion Styles */
+        .nav-group { border-bottom: 1px solid var(--border-color); }
+        .nav-group-header {
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            color: var(--text-dark);
+            background: #fdfdfd;
+            transition: background 0.2s;
+        }
+        .nav-group-header:hover { background: var(--bg-main); }
+        .nav-group-header i.arrow { transition: transform 0.3s; color: var(--text-muted); }
+        .nav-group.active .nav-group-header i.arrow { transform: rotate(180deg); }
+        
+        .nav-group-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: var(--bg-card);
+        }
+        .nav-group.active .nav-group-content { max-height: 1000px; /* arbitrary large value */ }
 
-        /* Lists & Typography */
-        ul { padding-left: 20px; margin: 0; }
-        li { margin-bottom: 12px; line-height: 1.5; }
-        .problem-list li { list-style-type: none; position: relative; padding-left: 25px; }
-        .problem-list li::before { content: '\f071'; font-family: 'FontAwesome'; position: absolute; left: 0; color: #ef4444; }
-        .solution-list li { list-style-type: none; position: relative; padding-left: 25px; }
-        .solution-list li::before { content: '\f00c'; font-family: 'FontAwesome'; position: absolute; left: 0; color: var(--success); }
+        .tab-list { list-style: none; padding: 10px 15px; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+        
+        .tab-btn { 
+            width: 100%; 
+            text-align: left; 
+            background: transparent; 
+            border: 1px solid transparent; 
+            color: var(--text-body); 
+            padding: 12px 15px; 
+            cursor: pointer; 
+            border-radius: 8px;
+            transition: all 0.2s ease; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            font-size: 0.9em; 
+            font-weight: 600;
+        }
+        
+        .tab-btn i.icon-main { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 6px; background: #f3f4f6; color: var(--text-body); transition: 0.2s; }
+        .tab-btn:hover { background: var(--bg-main); border-color: var(--border-color); transform: translateX(4px); }
+        
+        .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25); }
+        .tab-btn.active i.icon-main { background: rgba(255,255,255,0.2); color: white; }
 
+        /* Main Content */
+        .main-content { flex: 1; overflow-y: auto; padding: 50px; scroll-behavior: smooth; }
+        .content-wrapper { max-width: 1050px; margin: auto; }
+
+        /* General UI Elements */
+        .header-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px; }
+        .badge-industry { background: var(--primary-light); color: var(--primary); }
+        .badge-addon { background: #f3e8ff; color: var(--premium); }
+        .badge-service { background: #dcfce7; color: var(--success); }
+
+        .page-title { font-size: 2.8em; font-weight: 800; color: var(--text-dark); margin: 0 0 15px 0; letter-spacing: -1px; }
+        .page-desc { font-size: 1.2em; color: var(--text-body); line-height: 1.6; margin: 0 0 40px 0; max-width: 800px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 30px; }
+        
+        .card { background: var(--bg-card); border-radius: 16px; padding: 35px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid var(--border-color); position: relative; overflow: hidden; }
+        .section-title { font-size: 1.3em; font-weight: 800; color: var(--text-dark); display: flex; align-items: center; gap: 12px; margin-top: 0; margin-bottom: 25px; }
+        
+        /* Core Grid */
+        .core-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .core-item { display: flex; gap: 15px; align-items: flex-start; }
+        .core-item-icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; background: var(--primary-light); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.2em; }
+        .core-item h4 { margin: 0 0 5px 0; color: var(--text-dark); font-size: 1em; }
+        .core-item p { margin: 0; font-size: 0.9em; line-height: 1.5; color: var(--text-muted); }
+
+        /* Lists */
+        ul.custom-list { padding: 0; margin: 0; list-style: none; }
+        ul.custom-list li { position: relative; padding-left: 32px; margin-bottom: 16px; line-height: 1.6; }
+        ul.custom-list li::before { 
+            content: '\f00c'; font-family: 'FontAwesome'; position: absolute; left: 0; top: 2px;
+            color: var(--success); background: #dcfce7; width: 20px; height: 20px;
+            display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.6em;
+        }
+        ul.problem-list li::before { content: '\f00d'; color: var(--danger); background: #fee2e2; }
+
+        /* Addon/Service Boxes */
+        .addon-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid var(--secondary); transition: transform 0.2s; }
+        .addon-box:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .addon-box h4 { margin: 0 0 8px 0; color: var(--text-dark); display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+        .addon-box h4 span.tag { background: var(--secondary); color: white; font-size: 0.7em; padding: 3px 8px; border-radius: 12px; text-transform: uppercase; }
+        
         /* Copywriting Section */
-        .copy-box { background: var(--navy); color: var(--white); padding: 30px; border-radius: 12px; position: relative; }
-        .copy-box h4 { color: #60a5fa; margin-top: 0; text-transform: uppercase; font-size: 0.85em; letter-spacing: 1px; margin-bottom: 15px; }
-        .copy-box p { font-size: 1.05em; line-height: 1.7; opacity: 0.9; }
-        .copy-box .cta { margin-top: 20px; color: #34d399; font-weight: bold; }
+        .copy-box { background: linear-gradient(135deg, var(--text-dark) 0%, #1f2937 100%); color: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .copy-box h4 { color: var(--secondary); margin-top: 0; text-transform: uppercase; font-size: 0.85em; letter-spacing: 1px; margin-bottom: 20px; opacity: 0.9; }
+        .copy-box p { font-size: 1.15em; line-height: 1.8; font-weight: 300; }
 
-        /* SEO Section */
-        .seo-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
-        .seo-tag { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 12px; border-radius: 20px; font-size: 0.85em; color: var(--text-main); }
+        /* Tags */
+        .seo-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .seo-tag { background: #f3f4f6; border: 1px solid #e5e7eb; padding: 6px 14px; border-radius: 20px; font-size: 0.85em; color: var(--text-body); font-weight: 600; }
 
-        .hidden { display: none; }
+        /* Pricing Badge for Services */
+        .price-badge { background: #f1f5f9; padding: 5px 10px; border-radius: 6px; font-size: 0.9em; color: var(--text-dark); font-weight: bold; display: inline-block; margin-top: 10px; border: 1px solid var(--border-color); }
+
+        .fade-in { animation: fadeIn 0.4s ease forwards; opacity: 0; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -79,290 +172,562 @@
             <h1>FlowQuest <span>OS</span></h1>
             <p>Baza Wiedzy Architekta</p>
         </div>
-        <ul class="tab-list">
-            <button class="tab-btn active" onclick="loadData(0, this)"><i class="fa-solid fa-tools"></i> 01. HVAC / Serwis</button>
-            <button class="tab-btn" onclick="loadData(1, this)"><i class="fa-solid fa-helmet-safety"></i> 02. Budownictwo</button>
-            <button class="tab-btn" onclick="loadData(2, this)"><i class="fa-solid fa-stethoscope"></i> 03. Medycyna</button>
-            <button class="tab-btn" onclick="loadData(3, this)"><i class="fa-solid fa-gavel"></i> 04. Prawo</button>
-            <button class="tab-btn" onclick="loadData(4, this)"><i class="fa-solid fa-microchip"></i> 05. Agencje AI / IT</button>
-            <button class="tab-btn" onclick="loadData(5, this)"><i class="fa-solid fa-truck"></i> 06. Logistyka</button>
-            <button class="tab-btn" onclick="loadData(6, this)"><i class="fa-solid fa-house"></i> 07. Nieruchomości</button>
-            <button class="tab-btn" onclick="loadData(7, this)"><i class="fa-solid fa-cart-shopping"></i> 08. E-commerce</button>
-            <button class="tab-btn" onclick="loadData(8, this)"><i class="fa-solid fa-dumbbell"></i> 09. Fitness</button>
-            <button class="tab-btn" onclick="loadData(9, this)"><i class="fa-solid fa-sparkles"></i> 10. Beauty</button>
-        </ul>
+
+        <div class="nav-group active">
+            <div class="nav-group-header" onclick="toggleGroup(this)">
+                <span><i class="fa-solid fa-layer-group"></i> Pakiety Branżowe (10)</span>
+                <i class="fa-solid fa-chevron-down arrow"></i>
+            </div>
+            <div class="nav-group-content">
+                <ul class="tab-list" id="industry-tabs">
+                    </ul>
+            </div>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-group-header" onclick="toggleGroup(this)">
+                <span><i class="fa-solid fa-puzzle-piece"></i> Wtyczki Dodatkowe</span>
+                <i class="fa-solid fa-chevron-down arrow"></i>
+            </div>
+            <div class="nav-group-content">
+                <ul class="tab-list">
+                    <li><button class="tab-btn" onclick="loadContent('plugins', 0, this)"><i class="fa-solid fa-plug icon-main"></i> Baza Add-ons (Upsell)</button></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-group-header" onclick="toggleGroup(this)">
+                <span><i class="fa-solid fa-code"></i> Usługi IT / Wdrożenia</span>
+                <i class="fa-solid fa-chevron-down arrow"></i>
+            </div>
+            <div class="nav-group-content">
+                <ul class="tab-list">
+                    <li><button class="tab-btn" onclick="loadContent('services', 0, this)"><i class="fa-solid fa-server icon-main"></i> Pakiety Wdrożeniowe</button></li>
+                </ul>
+            </div>
+        </div>
     </div>
 
-    <div class="main-content">
+    <div class="main-content" id="main-scroll">
         <div class="content-wrapper" id="content-container">
             </div>
     </div>
 
     <script>
-        const industryData = [
+        // --- LOGIKA AKORDEONU ---
+        function toggleGroup(element) {
+            const group = element.parentElement;
+            group.classList.toggle('active');
+        }
+
+        // --- BAZA DANYCH: 10 BRANŻ ---
+        const industries = [
             {
+                icon: "fa-tools",
+                tabName: "01. HVAC / Serwis",
                 title: "Technik PRO (HVAC & OZE)",
-                target: "Firmy instalacyjne (fotowoltaika, pompy ciepła), serwisanci klimatyzacji, mobilne serwisy techniczne.",
-                shortDesc: "Ekosystem eliminujący zgubione części i zapomniane przeglądy. Pełna kontrola nad mobilnym magazynem i czasem pracy ekip w terenie.",
-                longDesc: "Pakiet Technik PRO przekształca firmę instalacyjną w precyzyjnie naoliwioną maszynę. Integracja modułów <strong>Magazyn</strong> oraz <strong>Zarządzanie Majątkiem</strong> pozwala przypisać konkretne falowniki, pompy czy drogie elektronarzędzia do konkretnego auta (mobilnego magazynu). Dzięki modułowi <strong>Karty Czasu Pracy</strong>, właściciel z dokładnością co do minuty wie, ile czasu zajął montaż u klienta, co pozwala na precyzyjne wyliczenie realnej marży na zleceniu.",
+                target: "Firmy instalacyjne (fotowoltaika, pompy ciepła), serwisy techniczne, elektrycy.",
+                shortDesc: "Ekosystem łączący obieg dokumentów z pełną ewidencją sprzętu i mobilnym magazynem części na autach serwisowych.",
+                addons: [
+                    { name: "Magazyn (Inventory)", desc: "Podgląd stanów części zamiennych przypisanych do konkretnych samochodów serwisowych. Unikasz sytuacji, gdy technik jedzie na awarię bez odpowiedniego modułu." },
+                    { name: "Zarządzanie Majątkiem (Assets)", desc: "System Check-in/Check-out dla drogich elektronarzędzi. Wiesz, który pracownik aktualnie posiada firmową wiertnicę czy miernik." },
+                    { name: "Karty Czasu Pracy", desc: "Precyzyjne zliczanie godzin spędzonych u klienta, kluczowe przy rozliczaniu interwencji pogwarancyjnych." }
+                ],
                 problems: [
-                    "Brak wiedzy, co ekipa ma aktualnie na aucie (części i narzędzia).",
-                    "Gubienie drogiego sprzętu (wiertarki, mierniki) na placach budowy.",
-                    "Papierowe protokoły odbioru, które giną lub są nieczytelne.",
-                    "Zapominanie o cyklicznych, płatnych przeglądach gwarancyjnych (utrata przychodu)."
+                    "Klienci dzwoniący z awarią gubią się w gąszczu SMS-ów i maili.",
+                    "Tracenie marży na zagubionych częściach i niedokładnie zliczonym czasie pracy.",
+                    "Brak wiedzy, u kogo na wyposażeniu znajduje się drogi sprzęt firmowy."
                 ],
                 solutions: [
-                    "Mobilny magazyn w telefonie – inwentaryzacja aut w czasie rzeczywistym.",
-                    "Ewidencja sprzętu z systemem wypożyczeń (Check-in / Check-out).",
-                    "E-podpisy klientów na protokołach bezpośrednio z tabletu serwisanta.",
-                    "Automatyczne powiadomienia e-mail/SMS do klienta o zbliżającym się przeglądzie."
+                    "Klient zgłasza awarię przez Portal Klienta, tworząc automatyczny Ticket serwisowy.",
+                    "Technik klika 'Start' w zadaniu na telefonie, automatycznie licząc czas do faktury.",
+                    "Zautomatyzowana ewidencja z historią wypożyczeń narzędzi."
                 ],
-                seo: ["oprogramowanie dla instalatorów pomp ciepła", "crm dla hvac", "program do serwisu klimatyzacji", "zarządzanie zleceniami serwisowymi", "aplikacja dla serwisantów w terenie", "program do ofertowania fotowoltaiki"],
-                copywriting: "Codziennie tracisz pieniądze na zagubionych częściach i darmowych nadgodzinach Twoich ekip. FlowQuest OS Technik PRO to koniec zarządzania serwisem „na zeszyt”. Zyskaj pełen wgląd w to, gdzie są Twoje narzędzia, ile materiału zeszło na montaż u klienta i które zlecenia pożerają Twoją marżę. Od teraz każda wizyta kończy się elektronicznym protokołem i automatyczną fakturą wysłaną z auta na maila klienta. Ty odzyskujesz kontrolę, Twoja firma – profesjonalny wizerunek."
+                seo: ["oprogramowanie dla instalatorów", "crm dla serwisu klimatyzacji", "zarządzanie zleceniami serwisowymi", "aplikacja dla techników w terenie"],
+                copywriting: "Jako instalator sprzedajesz pewność, że wszystko zadziała. Dlaczego więc Twoje zaplecze przypomina chaos? FlowQuest OS Technik PRO to środowisko, w którym w jednym oknie widzisz klienta, przypisujesz technika do zlecenia, a system sam dba o to, by zdjąć ze stanu odpowiednie części. Zapomnij o Excelu i zeszytach – zacznij zarządzać serwisem jak nowoczesną firmą."
             },
             {
+                icon: "fa-helmet-safety",
+                tabName: "02. Budownictwo",
                 title: "Budowa Control",
-                target: "Generalni wykonawcy, ekipy wykończeniowe, firmy deweloperskie, wynajem maszyn budowlanych.",
-                shortDesc: "Kokpit zarządzania zasobami ludzkimi i sprzętem na wielu placach budowy jednocześnie.",
-                longDesc: "Dla branży budowlanej kluczem jest harmonogramowanie. Moduł <strong>Staff Workload</strong> wizualizuje obciążenie poszczególnych brygad, zapobiegając przestojom. <strong>Zaawansowane Statusy Zadań</strong> pozwalają na stworzenie workflow dopasowanego do etapów budowy (np. Stan Surowy -> Instalacje -> Wykończenie). Dodatkowo, wbudowane moduły <strong>HRM i Rekrutacja</strong> pomagają utrzymać porządek w dokumentacji podwykonawców i szybko pozyskiwać nowe ręce do pracy.",
+                target: "Generalni wykonawcy, ekipy remontowe, deweloperzy, podwykonawcy.",
+                shortDesc: "Harmonogramowanie pracy brygad i monitorowanie kosztów budowy na żywo, bez zaskoczeń na koniec projektu.",
+                addons: [
+                    { name: "Staff Workload (Obłożenie)", desc: "Wizualny kalendarz pokazujący, która ekipa ma wolne moce przerobowe, a która jest przeciążona na danym placu budowy." },
+                    { name: "Zaawansowane Statusy Zadań", desc: "Dedykowany workflow dla budowy (np. Stan Surowy -> Wykończenie -> Odbiór), z automatycznym powiadamianiem inwestora." },
+                    { name: "Moduł HR / Rekrutacja", desc: "Baza danych sprawdzonych podwykonawców i łatwe śledzenie ich uprawnień czy stawek." }
+                ],
                 problems: [
-                    "Przestoje wynikające ze złego zaplanowania pracy brygad.",
-                    "Chaos w rozliczeniach z podwykonawcami i pracownikami dorywczymi.",
-                    "Brak realnej kontroli nad postępem prac (klient dzwoni z pretensjami).",
-                    "Brak bazy wiedzy o tym, jakie materiały poszły na dany etap budowy."
+                    "Nakładające się terminy ekip powodujące przestoje na placu budowy.",
+                    "Inwestorzy dzwoniący codziennie z pytaniem 'Na jakim jesteśmy etapie?'.",
+                    "Trudności w rozliczeniu roboczogodzin podwykonawców z różnych firm."
                 ],
                 solutions: [
-                    "Wizualny kalendarz obłożenia (Workload) zapobiegający konfliktom terminów.",
-                    "Ewidencja czasu pracy podwykonawców z podpięciem pod konkretny projekt.",
-                    "Portal Klienta – inwestor loguje się i widzi % postępu prac oraz zdjęcia.",
-                    "Zarządzanie materiałami i maszynami na budowie z jednego panelu."
+                    "Przejrzysty wykres obciążenia ludzi ułatwiający planowanie zleceń.",
+                    "Inwestor loguje się do Portalu, widzi zdjęcia w załącznikach i aktualny % postępu prac.",
+                    "Karty Czasu Pracy zintegrowane bezpośrednio z wydatkami w projekcie (kontrola marży)."
                 ],
-                seo: ["program dla firmy budowlanej", "crm dla budownictwa", "zarządzanie projektami budowlanymi", "harmonogram robót budowlanych program", "aplikacja dla kierownika budowy", "ewidencja sprzętu na budowie"],
-                copywriting: "Prowadzisz kilka budów naraz i czujesz, że żyjesz w wiecznym trybie „gaszenia pożarów”? FlowQuest OS Budowa Control zmienia plac budowy w przewidywalny mechanizm. Zobacz na jednym ekranie, która ekipa ma przestoje, gdzie znajduje się Twoja koparka i jaki jest realny koszt materiałów na dany moment. Daj swoim inwestorom dostęp do Portalu Klienta, aby sami widzieli postępy – przestaną dzwonić, zaczną polecać. Zbuduj fundamenty pod skalowanie swojej firmy."
+                seo: ["crm dla budownictwa", "program do zarządzania budową", "harmonogram robót budowlanych program", "rozliczanie czasu pracy na budowie"],
+                copywriting: "Zarządzanie budową nie musi być zarządzaniem kryzysem. FlowQuest OS Budowa Control zmienia Twój proces w przewidywalną architekturę. Zamiast tłumaczyć się inwestorowi przez telefon, dajesz mu bezpieczny panel, w którym sam śledzi postępy. Odzyskaj kontrolę nad terminami, podwykonawcami i – co najważniejsze – nad rentownością każdej inwestycji."
             },
             {
+                icon: "fa-stethoscope",
+                tabName: "03. Medycyna",
                 title: "Klinika Flow",
-                target: "Prywatne gabinety lekarskie, kliniki stomatologiczne, fizjoterapia, psychoterapia.",
-                shortDesc: "Dyskretny i zautomatyzowany system obsługi pacjenta – od rejestracji online po badanie satysfakcji.",
-                longDesc: "Pakiet zaprojektowany z myślą o maksymalnym komforcie pacjenta i odciążeniu recepcji. Moduł <strong>Appointly</strong> tworzy widget na stronie, pozwalając na booking 24/7. Moduł <strong>Ankiety</strong> automatycznie wysyła formularz wywiadu medycznego przed wizytą oraz prośbę o ocenę po niej. <strong>Wewnętrzny Czat</strong> pozwala lekarzowi na szybką, bezpieczną komunikację z recepcją bez opuszczania gabinetu.",
+                target: "Prywatne gabinety, przychodnie, psychoterapeuci, fizjoterapeuci.",
+                shortDesc: "Dyskretny system do automatyzacji rejestracji pacjentów, zbierania wywiadu i posprzedażowego budowania opinii.",
+                addons: [
+                    { name: "Rezerwacje Spotkań (Appointly)", desc: "Zewnętrzny kalendarz rezerwacyjny. Pacjent sam wybiera dostępny termin, a system wysyła mu powiadomienia." },
+                    { name: "Ankiety i Opinie (Surveys)", desc: "Automatyczna wysyłka bezpiecznego formularza przed wizytą (wywiad) oraz prośby o opinię w Google po wizycie." },
+                    { name: "Wewnętrzny Czat", desc: "Bezpieczna komunikacja tekstowa między recepcją a gabinetem lekarza (bez krzyczenia przez korytarz)." }
+                ],
                 problems: [
-                    "Puste okienka w grafiku przez pacjentów, którzy zapomnieli o wizycie.",
-                    "Przebodźcowana recepcja, która nie nadąża z odbieraniem telefonów.",
-                    "Brak bezpiecznego, uporządkowanego archiwum historii kontaktu z pacjentem.",
-                    "Brak systematycznego zbierania opinii w Google."
+                    "Recepcja przeciążona odbieraniem telefonów, przez co spada jakość obsługi na miejscu.",
+                    "Pacjenci zapominający o wizytach, co powoduje kosztowne 'puste okienka' w grafiku.",
+                    "Brak zautomatyzowanego sposobu na pozyskiwanie pozytywnych opinii w Google."
                 ],
                 solutions: [
-                    "Rezerwacja online z automatycznymi przypomnieniami SMS/e-mail.",
-                    "Odciążenie telefonu o 40% dzięki self-service'owi pacjentów.",
-                    "Scentralizowana baza pacjentów (CRM) z pełną historią plików i zgód RODO.",
-                    "Automatyczna wysyłka linku do wizytówki Google po zakończonej sukcesem wizycie."
+                    "Rejestracja online dostępna 24/7 z systemem powiadomień e-mail/SMS.",
+                    "Bezpieczna historia pacjenta w CRM (notatki, pliki, podpisane e-zgody RODO).",
+                    "Zautomatyzowane wysyłanie prośby o opinię po zmianie statusu wizyty na 'Zakończona'."
                 ],
-                seo: ["oprogramowanie dla gabinetu lekarskiego", "system rezerwacji wizyt medycznych", "crm dla fizjoterapeuty", "program dla przychodni", "elektroniczna dokumentacja pacjenta", "aplikacja dla psychoterapeuty"],
-                copywriting: "Twój czas jako specjalisty jest zbyt cenny, by tracić go na administrację, a Twoja recepcja nie powinna być tylko centralą telefoniczną. Klinika Flow to Twój wirtualny asystent medyczny. Pacjenci sami rezerwują wizyty w środku nocy, system sam wysyła im przypomnienia, a po wizycie sam prosi o pięciogwiazdkową opinię. Ty wchodzisz do gabinetu, otwierasz kartę pacjenta i skupiasz się na tym, co najważniejsze – na leczeniu. Wprowadź standardy medycyny premium."
+                seo: ["system rejestracji pacjentów", "crm dla gabinetu lekarskiego", "oprogramowanie dla fizjoterapeuty", "przypomnienia o wizytach lekarskich"],
+                copywriting: "Twoja wiedza medyczna i czas to najdroższe zasoby. Nie pozwól, aby marnowały się na ręczną papierologię. Klinika Flow to cyfrowa asystentka Twojego gabinetu. Pacjenci rezerwują wizyty w nocy, system dba o ich potwierdzenia, a Ty wchodząc rano masz czytelny, opłacony z góry kalendarz. Zbuduj wizerunek nowoczesnej placówki, w której to pacjent jest w centrum."
             },
             {
+                icon: "fa-gavel",
+                tabName: "04. Prawo / Finanse",
                 title: "Kancelaria 2.0",
-                target: "Kancelarie prawne, radcy prawni, notariusze, biura rachunkowe, doradcy podatkowi.",
-                shortDesc: "Pancerny obieg dokumentów, bezpieczna baza wiedzy i priorytetyzacja kluczowych klientów biznesowych.",
-                longDesc: "Dla prawników liczy się czas i poufność. Moduł <strong>Planowanie Kluczowych Klientów</strong> pozwala kategoryzować sprawy i zarządzać relacjami VIP. Moduł <strong>Wiki</strong> to cyfrowa biblioteka kancelarii – baza orzecznictwa, wzorów umów i procedur. <strong>Arkusze Online</strong> wbudowane w CRM pozwalają na tworzenie zestawień kosztowych spraw, a <strong>Skrzynka Odbiorcza</strong> przypina korespondencję mailową wprost do profilu klienta, tworząc pełne Akta Elektroniczne.",
+                target: "Kancelarie prawne, notariusze, biura księgowe, doradcy biznesowi.",
+                shortDesc: "Pancerne archiwum spraw, baza orzecznictwa wewnątrz systemu oraz priorytetyzacja najważniejszych klientów biznesowych.",
+                addons: [
+                    { name: "Baza Wiedzy (Wiki)", desc: "Wewnętrzna encyklopedia kancelarii. Służy do przechowywania wzorów umów, procedur i standardów dla aplikantów." },
+                    { name: "Planowanie Kluczowych Klientów", desc: "Moduł dedykowany relacjom VIP. Śledzenie celów biznesowych i rentowności dla największych podmiotów." },
+                    { name: "Arkusze Online", desc: "Praca na zaawansowanych kalkulacjach (jak w Excelu) bezpośrednio w bezpiecznym środowisku CRM." }
+                ],
                 problems: [
-                    "Rozproszone maile – szukanie kluczowej wiadomości od klienta sprzed pół roku.",
-                    "Brak standaryzacji – nowi aplikanci nie wiedzą, gdzie szukać wzorów pism.",
-                    "Niezarejestrowane godziny pracy (billable hours), które nie trafiają na fakturę.",
-                    "Utrudniona wspólna praca nad dokumentami finansowymi."
+                    "Brak centralnego miejsca na historię komunikacji (maile rozrzucone po osobistych skrzynkach).",
+                    "Gubienie 'billable hours' – nieewidencjonowany czas spędzony na konsultacjach telefonicznych.",
+                    "Wolny onboarding nowych aplikantów z powodu braku spisanych procedur."
                 ],
                 solutions: [
-                    "Pełna synchronizacja maili w aktach klienta (CRM Mailbox).",
-                    "Wewnętrzna baza wiedzy (Wiki) ułatwiająca wdrażanie nowych pracowników.",
-                    "Precyzyjny Timer do zadań – zamiana kliknięcia 'Start' w gotową pozycję na fakturze.",
-                    "Arkusze kalkulacyjne wewnątrz bezpiecznego ekosystemu CRM."
+                    "Skrzynka Odbiorcza CRM podpina całą korespondencję bezpośrednio pod kartę klienta (Akta Elektroniczne).",
+                    "Wbudowany Timer Zadań pozwala jednym kliknięciem zamienić czas pracy na pozycję na fakturze.",
+                    "Moduł Wiki natychmiast udostępnia nowym pracownikom wypracowane know-how."
                 ],
-                seo: ["program dla kancelarii prawnej", "crm dla prawników", "zarządzanie aktami spraw", "rejestracja czasu pracy prawnika", "oprogramowanie dla biura rachunkowego", "baza wiedzy dla kancelarii"],
-                copywriting: "Prawo opiera się na precyzji, Twoja kancelaria również powinna. FlowQuest OS dla Kancelarii eliminuje stres związany z zagubionymi mailami, niedotrzymanymi terminami i niezafakturowanymi godzinami pracy. Stwórz pancerne Akta Elektroniczne, do których masz dostęp z każdego miejsca na świecie. Buduj wewnętrzną bazę procedur (Wiki), by Twój zespół pracował według najwyższych standardów. Odzyskaj czas na merytoryczną pracę nad sprawami, resztę zautomatyzuj."
+                seo: ["program dla kancelarii prawnej", "crm dla radców prawnych", "rozliczanie czasu pracy prawnika", "elektroniczne akta klienta"],
+                copywriting: "W usługach doradczych liczy się precyzja, dyskrecja i czas. FlowQuest OS łączy te trzy żywioły w jednym bezpiecznym środowisku. Zapisuj każdą minutę swojej eksperckiej pracy i bezboleśnie zamieniaj ją na faktury. Zbuduj pancerne Akta Elektroniczne, do których masz dostęp z sądu czy w podróży. Pracuj mądrzej, a nie dłużej."
             },
             {
-                title: "Smart Agency (AI & Tech)",
-                target: "Agencje marketingowe, software house'y, agencje wdrożeniowe AI, konsultanci technologiczni.",
-                shortDesc: "Nowoczesne środowisko projektowe z wbudowaną sztuczną inteligencją i nieograniczonymi integracjami.",
-                longDesc: "Agencje cyfrowe wymagają zwinności (Agile). <strong>Asystent AI (OpenAI Integration)</strong> bezpośrednio w CRM generuje drafty ofert, kampanii czy maili. Moduł <strong>Kreator Stron (Zillapage)</strong> pozwala na błyskawiczne stawianie lejków sprzedażowych dla klientów agencji. Dzięki potężnemu <strong>API REST</strong> oraz <strong>Automatyzacjom</strong>, system staje się centralnym hubem połączonym z zewnętrznymi narzędziami analitycznymi i reklamowymi.",
+                icon: "fa-microchip",
+                tabName: "05. Agencje AI / Tech",
+                title: "Smart Agency Kit",
+                target: "Agencje wdrażające AI, Software House'y, Agencje Marketingowe 360.",
+                shortDesc: "Nowoczesne środowisko zarządzania projektami, zasilane sztuczną inteligencją i gotowe na głębokie integracje przez API.",
+                addons: [
+                    { name: "Asystent AI (OpenAI)", desc: "Pisanie draftów propozycji, briefów projektowych czy maili bezpośrednio w edytorze tekstu wewnątrz CRM." },
+                    { name: "API REST & Automatyzacje", desc: "Pełen dostęp do endpoints API, co pozwala łączyć system przez Make.com z Slackiem, Githubem czy Jira." },
+                    { name: "Kreator Stron (Zillapage)", desc: "Błyskawiczne budowanie lejków sprzedażowych i landing page'y pod dedykowane kampanie reklamowe." }
+                ],
                 problems: [
-                    "Tracenie godzin na pisanie powtarzalnych ofert i briefów.",
-                    "Silosy danych – brak połączenia między kampaniami klienta a CRM.",
-                    "Klient, który ciągle pyta „na jakim etapie jesteśmy z projektem?”.",
-                    "Rozproszone narzędzia do Landing Page'y i formularzy."
+                    "Silosy danych – brak połączenia między procesem sprzedaży (Leady) a produkcją (Development).",
+                    "Wysokie koszty operacyjne przy pisaniu powtarzalnych konceptów i briefów.",
+                    "Klienci IT oczekujący pełnej transparentności procesu, a otrzymujący jedynie maile ze statusem."
                 ],
                 solutions: [
-                    "AI generujące treść prosto w edytorze ofert i zadań.",
-                    "API pozwalające na integrację z Make.com / Zapier.",
-                    "Dedykowany portal klienta ze śledzeniem zadań (Kanban / Zaawansowane Statusy).",
-                    "Wbudowany kreator stron lądowania ze zintegrowanymi formularzami (FormSync)."
+                    "Agile Boards (Kanban) połączone bezpośrednio ze statusem u klienta.",
+                    "Wykorzystanie AI do przyspieszenia tworzenia dokumentacji.",
+                    "Nowoczesny Portal B2B, w którym klient widzi kod, poprawki i faktury w jednym miejscu."
                 ],
-                seo: ["crm dla agencji marketingowej", "oprogramowanie dla software house", "system zarządzania projektami it", "ai w zarządzaniu firmą", "automatyzacja procesów w agencji", "generowanie leadów b2b crm"],
-                copywriting: "Jesteś na froncie rewolucji technologicznej – nie możesz zarządzać projektami jak firma w latach 90. FlowQuest OS Smart Agency to system, który uwiarygadnia Twój profesjonalizm. Zaproś klienta do nowoczesnego portalu, gdzie na żywo widzi postęp prac. Wykorzystaj wbudowaną sztuczną inteligencję do błyskawicznego tworzenia koncepcji i ofert. Buduj dedykowane lejki sprzedażowe prosto z poziomu CRM. Zbuduj operacyjną maszynę, która nadąży za Twoimi ambicjami."
+                seo: ["crm dla agencji marketingowej", "system zarządzania projektami it", "automatyzacja api crm", "ai dla agencji"],
+                copywriting: "Tworzysz innowacje dla swoich klientów. Pora, by Twój własny system reprezentował tę samą klasę. Smart Agency Kit to hub gotowy na erę AI. Wykorzystaj sztuczną inteligencję do błyskawicznego draftowania briefów. Daj programistom dostęp do czystego API REST. Pokaż klientowi Portal, który udowadnia, że jesteście krok przed konkurencją."
             },
             {
+                icon: "fa-truck-fast",
+                tabName: "06. Logistyka / Flota",
                 title: "Logistyka Fleet",
-                target: "Firmy transportowe, kurierskie, spedycje, wypożyczalnie aut, flota handlowa.",
-                shortDesc: "Pełny monitoring floty, dokumentacji pojazdów i historii komunikacji z kierowcami.",
-                longDesc: "W transporcie informacja to waluta. <strong>Zarządzanie Majątkiem</strong> w tym pakiecie służy jako ewidencja floty: terminy ubezpieczeń, przeglądów, wymiany opon. Moduł <strong>Rejestr Połączeń</strong> pozwala dyspozytorom na szybkie notowanie ustaleń z kierowcami i klientami. System wykorzystuje <strong>Niestandardowe Powiadomienia (Email/SMS)</strong> i <strong>Telegram Chat</strong> do błyskawicznego alertowania kierowców o zmianach trasy lub statusach załadunku.",
+                target: "Firmy transportowe, kurierzy, spedycje, wypożyczalnie aut.",
+                shortDesc: "Pełny monitoring floty, dokumentacji pojazdów i historii komunikacji z kierowcami w trasie.",
+                addons: [
+                    { name: "Zarządzanie Majątkiem (Flota)", desc: "Ewidencja pojazdów. Śledzenie dat kończących się ubezpieczeń OC/AC, przeglądów i legalizacji tacho." },
+                    { name: "Rejestr Połączeń (Call Logs)", desc: "Miejsce dla dyspozytorów na zapisywanie kluczowych ustaleń telefonicznych z kierowcami i magazynami." },
+                    { name: "Powiadomienia Telegram/SMS", desc: "Automatyczne alertowanie kierowców o zmianach punktu załadunku prosto na ich smartfony." }
+                ],
                 problems: [
-                    "Przegapione terminy ubezpieczeń OC/AC lub badań technicznych aut.",
-                    "Brak dowodów ustaleń telefonicznych z kierowcami (nieporozumienia).",
-                    "Chaos w raportowaniu kosztów utrzymania poszczególnych pojazdów.",
-                    "Brak szybkiego kanału alarmowego do pracowników w trasie."
+                    "Przegapione terminy ubezpieczeń lub badań technicznych skutkujące uziemieniem pojazdu.",
+                    "Chaos komunikacyjny i brak pisemnych dowodów ustaleń między dyspozytorem a kierowcą.",
+                    "Rozproszone faktury kosztowe (paliwo, naprawy) uniemożliwiające wyliczenie rentowności auta."
                 ],
                 solutions: [
-                    "Zautomatyzowane alerty systemowe o kończących się przeglądach i polisach.",
-                    "Rejestrowanie historii rozmów (call logs) podpięte pod projekt/kierowcę.",
-                    "Szczegółowa ewidencja kosztów przypisana do konkretnego zasobu (pojazdu).",
-                    "Integracja z Telegramem i automatyczne powiadomienia SMS."
+                    "System przypomnień e-mail o zbliżających się datach krytycznych dla każdego pojazdu.",
+                    "Scentralizowany dziennik pokładowy dla każdego zlecenia w module Projektów.",
+                    "Moduł kosztów (Wydatki) przypisany bezpośrednio do danego numeru rejestracyjnego."
                 ],
-                seo: ["zarządzanie flotą pojazdów aplikacja", "program dla firmy transportowej", "crm dla spedycji", "program do ewidencji pojazdów", "powiadomienia o przeglądach aut", "zarządzanie komunikacją w logistyce"],
-                copywriting: "Pojazd, który stoi w serwisie z powodu braku przeglądu, nie zarabia. FlowQuest OS dla Logistyki przejmuje kontrolę nad Twoją flotą. System sam przypomni Ci o ubezpieczeniach, przeglądach technicznych i legalizacji tacho. Zyskaj jeden scentralizowany dziennik pokładowy, w którym dyspozytorzy zapisują wszystkie ustalenia z trasy. Automatyzuj powiadomienia do kierowców. Odzyskaj pełen wgląd w rentowność każdego pojazdu w Twoim parku maszynowym."
+                seo: ["program dla spedycji", "zarządzanie flotą pojazdów crm", "ewidencja samochodów w firmie", "system dla dyspozytorów"],
+                copywriting: "Pojazd, który stoi na placu z powodu braku przeglądu, to czysta strata. FlowQuest OS dla Logistyki przejmuje kontrolę nad Twoją flotą. System sam przypomni Ci o polisach i przeglądach. Zyskaj jeden, scentralizowany dziennik pokładowy, w którym dyspozytorzy zapisują ustalenia z trasy. Odzyskaj pełen wgląd w rentowność każdego auta."
             },
             {
-                title: "Agent Nieruchomości 360",
-                target: "Biura nieruchomości, niezależni brokerzy, deweloperzy lokalni, zarządcy najmu.",
-                shortDesc: "Maszynka do generowania leadów, połączona z elegancką prezentacją ofert i szybkim kontaktem.",
-                longDesc: "Rynek nieruchomości wymaga szybkości i wizerunku. Moduł <strong>Wielostronicowy Landing Page (Zillapage)</strong> pozwala agentowi w 15 minut postawić piękną stronę dla oferty Premium. <strong>Integracja Facebook Leads</strong> sprawia, że zapytania z reklam wpadają natychmiast jako nowe Leady w CRM. Dzięki <strong>Synchronizacji Formularzy (FormSync)</strong> i modułowi <strong>Telegram Chat</strong>, agent dostaje alert na telefon sekundę po tym, jak klient wykaże zainteresowanie.",
+                icon: "fa-building",
+                tabName: "07. Nieruchomości",
+                title: "Real Estate 360",
+                target: "Biura nieruchomości, pośrednicy, deweloperzy, zarządcy najmu.",
+                shortDesc: "Maszynka do przechwytywania leadów, połączona z elegancką prezentacją inwestycji i błyskawicznym kontaktem.",
+                addons: [
+                    { name: "Wielostronicowy Landing Page", desc: "Szybkie stawianie pięknych, dedykowanych stron internetowych pod sprzedaż konkretnej, drogiej nieruchomości." },
+                    { name: "Integracja FB Leads & FormSync", desc: "Leady z kampanii reklamowych w Meta Ads automatycznie wpadają do systemu jako nowe szanse sprzedaży." },
+                    { name: "Czat Real-time", desc: "Moduł umożliwiający agentowi natychmiastową odpowiedź na pytania klienta przeglądającego ofertę." }
+                ],
                 problems: [
-                    "Ręczne przepisywanie leadów z Facebooka do Excela (lead stygnie).",
-                    "Wysokie koszty i długi czas oczekiwania na stworzenie strony dla konkretnej inwestycji.",
-                    "Utrata potencjalnych kupców przez opóźnioną odpowiedź agenta.",
-                    "Brak historii prezentacji i ustaleń z poszczególnymi kupującymi."
+                    "Utrata gorących leadów z powodu zbyt późnego czasu reakcji agenta.",
+                    "Wysokie koszty i długi czas oczekiwania na stworzenie strony dla nowej inwestycji.",
+                    "Brak pełnej historii prezentacji mieszkań i ustaleń z poszczególnymi kupującymi."
                 ],
                 solutions: [
-                    "Automatyczny wlot leadów z Meta Ads bezpośrednio do lejka sprzedażowego.",
-                    "Kreator wizytówek www (Drag & Drop) bez wiedzy programistycznej.",
-                    "Alerty Push/Telegram o nowym zapytaniu – odpowiedź w 60 sekund.",
-                    "CRM z pełną historią spotkań, dokumentów (umowy rezerwacyjne) i ustaleń."
+                    "Automatyczny wlot zapytań z sieci bezpośrednio na tablicę Kanban w CRM.",
+                    "Wbudowany kreator wizytówek (Drag & Drop) bez wiedzy programistycznej.",
+                    "Moduł Notatek i Zadań przypisany do profilu inwestora (wiesz dokładnie czego szuka)."
                 ],
-                seo: ["crm dla biura nieruchomości", "program dla pośredników nieruchomości", "generowanie leadów nieruchomości", "tworzenie stron dla deweloperów", "system zarządzania sprzedażą mieszkań", "aplikacja dla agenta nieruchomości"],
-                copywriting: "W nieruchomościach kto pierwszy, ten sprzedaje. Przestań ręcznie kopiować leady z Facebooka – z FlowQuest OS wpadają one bezpośrednio na Twoją komórkę. Stwórz oszałamiającą stronę ofertową dla Twojej najlepszej willi w 15 minut, bez płacenia agencjom IT. Zbuduj bazę kontaktów, w której dokładnie wiesz, czego szuka dany inwestor. Zautomatyzuj swój marketing, zamknij szybciej transakcje i pokaż klientom, że pracują z nowoczesnym brokerem."
+                seo: ["crm dla biura nieruchomości", "program dla pośredników nieruchomości", "generowanie leadów deweloper", "landing page dla inwestycji"],
+                copywriting: "W branży nieruchomości kto pierwszy, ten sprzedaje. Przestań ręcznie kopiować leady z Facebooka – z FlowQuest OS wpadają one od razu na Twój ekran. Stwórz oszałamiającą stronę ofertową dla apartamentu w 15 minut. Zbuduj bazę kontaktów, w której dokładnie wiesz, jakiego metrażu szuka dany klient. Zamknij transakcje szybciej i pewniej."
             },
             {
+                icon: "fa-cart-shopping",
+                tabName: "08. E-commerce",
                 title: "E-commerce Sync",
-                target: "Małe sklepy internetowe, twórcy produktów cyfrowych, rękodzieło, marki D2C.",
-                shortDesc: "Odzyskaj kontrolę nad rozproszonym handlem. CRM połączony bezpośrednio z Twoim sklepem.",
-                longDesc: "Dla handlowców potrzebujących spiąć sprzedaż B2B i B2C. <strong>Integracja WooCommerce</strong> zapewnia dwustronną wymianę informacji o zamówieniach i klientach. Moduł <strong>Magazyn</strong> i <strong>Produkty</strong> pozwalają pilnować stanów asortymentu wewnątrz systemu. <strong>Bramka Płatności (Stripe/iDEAL)</strong> umożliwia opłacanie faktur proform jednym kliknięciem, a <strong>Omni Sales Dashboard</strong> daje wgląd w ogólną kondycję finansową sklepu.",
+                target: "Sklepy WooCommerce, marki D2C, dystrybutorzy hurtowi.",
+                shortDesc: "Opanuj sprzedaż wielokanałową. System, który łączy B2C (sklep) ze zautomatyzowanym ofertowaniem B2B (hurt).",
+                addons: [
+                    { name: "Integracja WooCommerce", desc: "Dwukierunkowa synchronizacja zamówień i danych klientów między Twoim sklepem online a centrum operacyjnym CRM." },
+                    { name: "Omni Sales & Produkty", desc: "Zarządzanie asortymentem i generowanie zaawansowanych raportów sprzedaży ze wszystkich kanałów." },
+                    { name: "Bramka Płatności (Stripe/iDEAL)", desc: "Szybkie księgowanie wpłat za duże faktury hurtowe bezpośrednio z linku w wiadomości e-mail." }
+                ],
                 problems: [
-                    "Sklep internetowy (WooCommerce) i fakturowanie to dwa różne, niepołączone światy.",
-                    "Trudności w obsłudze dużych zamówień hurtowych B2B w standardowym sklepie.",
-                    "Brak przejrzystego widoku na stany magazynowe i nadchodzące braki.",
-                    "Długi czas procesowania płatności za zamówienia niestandardowe."
+                    "Silosy: Sklep internetowy (B2C) i obsługa klienta hurtowego (B2B) to dwa niepołączone światy.",
+                    "Ręczne, żmudne przepisywanie danych do systemów księgowych.",
+                    "Trudności w tworzeniu eleganckich ofert na zamówienia niestandardowe."
                 ],
                 solutions: [
-                    "Pełna synchronizacja zamówień Woo -> CRM w czasie rzeczywistym.",
-                    "Baza klientów hurtowych (CRM) z możliwością wysyłki profesjonalnych ofert.",
-                    "Jeden wskaźnik stanu magazynowego z alertami o niskim stanie zapasów.",
-                    "Natychmiastowe linki do płatności online na fakturach wysyłanych z CRM."
+                    "Każde zamówienie na stronie tworzy wpis i aktualizuje lejek sprzedaży w CRM.",
+                    "Baza Produktów pozwala handlowcom w minutę złożyć potężny kosztorys PDF dla hurtownika.",
+                    "Pełna analityka zysków i strat (LTV klienta) w jednym narzędziu."
                 ],
-                seo: ["crm dla sklepu internetowego", "integracja woocommerce crm", "zarządzanie magazynem e-commerce", "fakturowanie dla woocommerce", "program do obsługi sprzedaży b2b", "system dla marek d2c"],
-                copywriting: "Twój sklep sprzedaje, ale Ty powoli toniesz w administracji? FlowQuest OS E-commerce Sync to Twój nowy most dowodzenia. Połącz swój sklep WooCommerce z potężnym środowiskiem analitycznym i magazynowym. Obsługuj klientów hurtowych (B2B) na najwyższym poziomie wysyłając im piękne, interaktywne oferty z opcją opłacenia kartą. Miej pełen wgląd w stany magazynowe, automatyzuj fakturowanie i zacznij podejmować decyzje na podstawie twardych danych o zyskach."
+                seo: ["crm dla e-commerce", "integracja woocommerce crm", "system fakturowania sklep internetowy", "sprzedaż b2b crm"],
+                copywriting: "Twój sklep sprzedaje, ale Ty toniesz w papierologii? E-commerce Sync to most między e-handlem a potężnym zapleczem B2B. Detaliczne zamówienia spływają automatycznie, podczas gdy Twój zespół wykorzystuje bazę do błyskawicznego tworzenia profesjonalnych ofert hurtowych. Połącz dwa światy i analizuj zyski w jednym, przejrzystym kokpicie."
             },
             {
-                title: "Studio Treningu (Fitness)",
-                target: "Trenerzy personalni, małe studia butikowe, szkoły jogi, trenerzy online.",
+                icon: "fa-dumbbell",
+                tabName: "09. Fitness",
+                title: "Studio Treningu",
+                target: "Trenerzy personalni, małe studia butikowe, szkoły jogi, fizjoterapeuci sportowi.",
                 shortDesc: "System motywacji, rezerwacji i lojalizacji, który trzyma klientów przy Tobie na lata.",
-                longDesc: "Branża fitness opiera się na relacjach i wynikach. Moduł <strong>Cele (Goals) / OKR</strong> pozwala na śledzenie progresu podopiecznych (np. utrata wagi, przyrost siły). <strong>Appointly</strong> to publiczny kalendarz, w którym klient sam zapisuje się na trening. <strong>Ankiety</strong> badają satysfakcję po cyklu treningowym. <strong>Asystent AI</strong> może stanowić wsparcie dla trenera przy generowaniu pomysłów na plany żywieniowe lub posty motywacyjne.",
+                addons: [
+                    { name: "Cele i OKR (Goals)", desc: "Moduł do śledzenia progresu podopiecznych (utrata wagi, przyrost siły, zrealizowane cykle treningowe)." },
+                    { name: "Rezerwacje (Appointly)", desc: "Publiczny kalendarz, w którym klient sam zapisuje się na wolne okienka treningowe." },
+                    { name: "Asystent AI", desc: "Zintegrowany model do błyskawicznego generowania zarysów planów dietetycznych i wpisów motywacyjnych na socjale." }
+                ],
                 problems: [
-                    "Odwoływanie treningów w ostatniej chwili i nieopłacone karnety.",
-                    "Klienci tracą motywację, bo nie widzą udokumentowanych postępów.",
-                    "Zbyt dużo czasu marnowanego na umawianie grafiku przez Messenger / SMS.",
-                    "Brak profesjonalnego miejsca do trzymania wywiadu medycznego klienta."
+                    "Utrata dochodów przez klientów odwołujących treningi w ostatniej chwili SMS-em.",
+                    "Klienci tracący motywację z powodu braku namacalnych, udokumentowanych postępów.",
+                    "Chaos w wywiadach medycznych i historii kontuzji (notatki na kartkach)."
                 ],
                 solutions: [
-                    "Zautomatyzowane zapisy z wpłatą z góry (Bramki Płatności) i przypomnieniami.",
-                    "Moduł Śledzenia Celów – udowodnij klientowi jego transformację twardymi danymi.",
-                    "Bezpieczna teczka klienta z wywiadem, kontuzjami i historią treningów.",
-                    "Wsparcie AI w szybkim tworzeniu contentu edukacyjnego dla podopiecznych."
+                    "Zautomatyzowane zapisy z przypomnieniami zmniejszające okienka w grafiku.",
+                    "Wizualne udowadnianie transformacji na koncie klienta, budujące długoterminową lojalność.",
+                    "Bezpieczna teczka klienta z całą historią treningową i przeciwwskazaniami."
                 ],
-                seo: ["program dla trenera personalnego", "aplikacja do rezerwacji treningów", "crm dla siłowni", "zarządzanie studiem fitness", "system zapisów na zajęcia grupowe", "aplikacja dla dietetyka"],
-                copywriting: "Nie jesteś tylko trenerem – jesteś inżynierem ludzkiej transformacji. Przestań marnować wieczory na układanie grafiku przez SMS. FlowQuest OS dla Fitnessu to platforma, w której Twój klient sam rezerwuje godzinę, opłaca trening i otrzymuje powiadomienie. Załóż profil każdemu podopiecznemu, śledź jego wyniki za pomocą modułu Celów i profesjonalnie dokumentuj jego wywiad zdrowotny. Podnieś standard swoich usług i przyciągnij klientów gotowych zapłacić za jakość."
+                seo: ["program dla trenera personalnego", "aplikacja do rezerwacji treningów", "crm dla siłowni", "zarządzanie studiem fitness"],
+                copywriting: "Nie jesteś tylko trenerem – jesteś inżynierem transformacji. Przestań marnować wieczory na układanie grafiku przez Messengera. FlowQuest OS dla Fitnessu to platforma, w której klient sam rezerwuje godzinę, a Ty prowadzisz jego cyfrową teczkę progresu. Podnieś standard usług i przyciągnij klientów gotowych płacić za jakość."
             },
             {
+                icon: "fa-sparkles",
+                tabName: "10. Beauty",
                 title: "Beauty Expert",
-                target: "Salony kosmetyczne, medycyna estetyczna, fryzjerzy, salony spa, wizażyści.",
-                shortDesc: "Zapełnij kalendarz, zbuduj ekskluzywny wizerunek i automatycznie proś o opinie.",
-                longDesc: "Wizerunek w branży Beauty to podstawa. <strong>Kreator Stron (Landing Page)</strong> pozwala zbudować piękne portfolio wizualne usług i metamorfoz. Sercem systemu są <strong>Rezerwacje Spotkań</strong> połączone z <strong>Powiadomieniami Telegram/SMS</strong> (zero zapomnianych wizyt). Moduł <strong>Opinie Klientów (Surveys)</strong> to zaprogramowana maszyna do generowania społecznego dowodu słuszności (Social Proof) natychmiast po udanym zabiegu.",
+                target: "Salony kosmetyczne, SPA, kliniki medycyny estetycznej, trycholodzy.",
+                shortDesc: "Zapełnij kalendarz, zbuduj luksusowy wizerunek marki i zautomatyzuj pozyskiwanie opinii w Google.",
+                addons: [
+                    { name: "System Rezerwacji Online", desc: "Intuicyjny booking działający 24/7, osadzony bezpośrednio na Twojej stronie i social mediach." },
+                    { name: "Automatyzacja Opinii (Surveys)", desc: "Wbudowany mechanizm wysyłający prośbę o 5-gwiazdkową recenzję godzinę po zakończonym zabiegu." },
+                    { name: "Kreator Stron (Zillapage)", desc: "Budowa pięknego portfolio wizualnego i landing page'y pod sezonowe pakiety SPA." }
+                ],
                 problems: [
-                    "Klientki nie przychodzą na umówione wizyty, blokując miejsce w kalendarzu.",
-                    "Brak czasu i wiedzy na stworzenie estetycznej, nowoczesnej strony WWW salonu.",
-                    "Trudność w regularnym pozyskiwaniu dobrych opinii w Google.",
-                    "Zapominanie o urodzinach stałych klientek lub o ofertach sezonowych."
+                    "Wysoki wskaźnik 'no-show' (klientki nie przychodzą i nie uprzedzają).",
+                    "Brak czasu na regularne pozyskiwanie cennych recenzji w internecie.",
+                    "Brak systemu do remarketingu (np. zaproszenie na kolejny zabieg po 3 tygodniach)."
                 ],
                 solutions: [
-                    "System rezerwacyjny działający 24/7 z agresywnymi przypomnieniami o wizycie.",
-                    "Wbudowany kreator stron (Drag&Drop) do zaprezentowania usług w stylizacji Premium.",
-                    "Automat wysyłający prośbę o ocenę w Google godzinę po wyjściu z salonu.",
-                    "Zarządzanie relacjami (CRM) i masowe kampanie mailingowe na specjalne okazje."
+                    "Agresywny, ale uprzejmy system podwójnych przypomnień (Email/SMS).",
+                    "Mechanizm, w którym zadowolenie klientki od razu przekłada się na wzrost pozycji w Google.",
+                    "Baza CRM pozwalająca jednym kliknięciem wysłać ofertę urodzinową do segmentu klientek VIP."
                 ],
-                seo: ["system rezerwacji wizyt salon kosmetyczny", "crm dla branży beauty", "program dla fryzjerów", "oprogramowanie dla medycyny estetycznej", "strona www dla salonu kosmetycznego", "przypomnienia sms o wizycie"],
-                copywriting: "Puste fotele to najdroższy koszt w salonie Beauty. FlowQuest OS gwarantuje, że Twój grafik będzie pełny i zapłacony. Udostępnij klientkom luksusowy portal do rezerwacji 24/7, połączony z powiadomieniami, które drastycznie zmniejszą liczbę „zapominalskich”. Stwórz oszałamiającą stronę z ofertą w 15 minut bez zatrudniania informatyka. Po każdym zabiegu system sam poprosi o opinię, budując Twoją potęgę w Google. Bądź ekspertem, który prowadzi nowoczesny i rentowny salon."
+                seo: ["crm dla salonu kosmetycznego", "system rezerwacji wizyt beauty", "program dla fryzjerów", "przypomnienia sms o wizycie"],
+                copywriting: "Puste fotele to najdroższy koszt w salonie Beauty. FlowQuest OS gwarantuje, że Twój grafik będzie pełny i zapłacony. Udostępnij klientkom luksusowy portal do rezerwacji, zautomatyzuj przypomnienia i pozwól, aby system sam prosił o opinie po udanym zabiegu. Bądź ekspertem, który prowadzi naprawdę nowoczesny salon."
             }
         ];
 
-        function loadData(index, element) {
-            // Update active state
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
+        // --- BAZA DANYCH: WTYCZKI DODATKOWE (ADD-ONS) ---
+        const plugins = [
+            {
+                title: "Moduł Księgowość i Finanse",
+                icon: "fa-file-invoice-dollar",
+                desc: "Zmień CRM w pełnoprawny program finansowy. Pełne raportowanie Zysków i Strat (P&L), planowanie budżetu, bilanse i integracja wpłat z kont bankowych.",
+                forWho: "Firmy, które chcą zrezygnować z zewnętrznych programów księgowych."
+            },
+            {
+                title: "Zaawansowane Rekrutacje i HR (HRM)",
+                icon: "fa-users-gear",
+                desc: "Zarządzanie pracownikami, urlopami, listą płac (payroll) oraz pełen lejek rekrutacyjny (od ogłoszenia po onboarding nowego pracownika).",
+                forWho: "Szybko rosnące zespoły i firmy budowlane/usługowe."
+            },
+            {
+                title: "Kopie Zapasowe (Cloud Backup)",
+                icon: "fa-cloud-arrow-up",
+                desc: "Święty spokój. Zautomatyzowane zrzuty całej bazy danych Twojej firmy (klienci, faktury, pliki) wysyłane w bezpieczne, zaszyfrowane miejsce.",
+                forWho: "Każdy biznes, dla którego dane to być albo nie być."
+            },
+            {
+                title: "Eksport Danych (CSV Manager)",
+                icon: "fa-file-csv",
+                desc: "Uwolnienie danych. Błyskawiczny eksport tabel, list klientów, wydatków i raportów bezpośrednio do plików kalkulacyjnych (Excel).",
+                forWho: "Analitycy i menedżerowie pracujący na zewnętrznych raportach."
+            },
+            {
+                title: "Baza Wiedzy (Wiki) dla Firm",
+                icon: "fa-book-open-reader",
+                desc: "Koniec z odpowiadaniem na te same pytania pracowników. Stwórz wewnętrzną encyklopedię procedur (SOP), instrukcji i standardów obsługi klienta.",
+                forWho: "Właściciele chcący delegować zadania i skalować organizację."
+            },
+            {
+                title: "Powiadomienia Telegram API",
+                icon: "fa-paper-plane",
+                desc: "Wyeliminuj opóźnienia. Konfiguracja błyskawicznych alertów na telefon (np. 'Nowy Lead', 'Faktura Opłacona') poprzez bezpieczny komunikator Telegram.",
+                forWho: "Handlowcy, agenci i właściciele pracujący w terenie."
+            }
+        ];
 
-            const data = industryData[index];
-            const content = `
-                <div class="industry-header">
-                    <span class="target-audience"><i class="fa-solid fa-bullseye"></i> Grupa Docelowa: ${data.target}</span>
-                    <h2>${data.title}</h2>
-                    <p class="short-desc">${data.shortDesc}</p>
-                </div>
+        // --- BAZA DANYCH: USŁUGI IT (HIGH TICKET) ---
+        const services = [
+            {
+                title: "Wdrożenie 'Klucz' (Server Install)",
+                icon: "fa-server",
+                price: "Wycena indywidualna",
+                desc: "Profesjonalna instalacja całego ekosystemu FlowQuest OS na Twoim prywatnym serwerze (VPS/Cloud) i dedykowanej domenie (np. crm.twojafirma.pl).",
+                features: [
+                    "Instalacja bazy danych i konfiguracja środowiska.",
+                    "Zabezpieczenie certyfikatem SSL i podpięcie SMTP (maile).",
+                    "Wstrzyknięcie paczki branżowej (Custom Fields + Menu)."
+                ]
+            },
+            {
+                title: "Creative Lab (Projektowanie WWW)",
+                icon: "fa-palette",
+                price: "od 2 500 PLN",
+                desc: "Nasza agencja projektuje dla Ciebie konwertującą, potężną stronę internetową lub Landing Page, który od pierwszego dnia zasila Twój nowy CRM w leady.",
+                features: [
+                    "Projekt UX/UI nastawiony na psychologię sprzedaży.",
+                    "Copywriting oparty na sprawdzonych modelach (PAS, AIDA).",
+                    "Pełna synchronizacja formularzy (FormSync) z FlowQuest OS."
+                ]
+            },
+            {
+                title: "Bridge Pro (Integracja WordPress)",
+                icon: "fa-bridge-water",
+                price: "od 900 PLN",
+                desc: "Masz już istniejącą stronę na WordPress lub sklep WooCommerce? Zbudujemy most, który sprawi, że zacznie ona „rozmawiać” z nowym systemem operacyjnym.",
+                features: [
+                    "Konfiguracja wtyczek wymieniających dane (REST API).",
+                    "Mapowanie produktów i bazy klientów ze sklepu.",
+                    "Testy środowiskowe (Mock testing) przed uruchomieniem."
+                ]
+            },
+            {
+                title: "Audyt Architektury Procesów AI",
+                icon: "fa-brain",
+                price: "Konsultacja",
+                desc: "Strategiczne spotkanie, podczas którego mapujemy procesy w Twojej firmie i sprawdzamy, gdzie wdrożenie Agenta AI zaoszczędzi Ci najwięcej pieniędzy.",
+                features: [
+                    "Analiza punktów wycieku marży i straty czasu.",
+                    "Dobór modeli językowych i konstrukcja bazy wiedzy (RAG).",
+                    "Raport wdrożeniowy (Roadmapa Automatyzacji)."
+                ]
+            }
+        ];
 
-                <div class="grid-2">
-                    <div class="card">
-                        <h3><i class="fa-solid fa-sitemap"></i> Architektura Rozwiązania (Moduły)</h3>
-                        <p style="color: var(--text-muted); font-size: 0.9em; margin-bottom: 15px;">Jakie unikalne technologie napędzają ten pakiet:</p>
-                        <p style="font-size: 0.95em; line-height: 1.6;">${data.longDesc}</p>
+        // --- WSPÓLNY FUNDAMENT (CORE) DLA BRANŻ ---
+        const coreHTML = `
+            <div class="card" style="margin-bottom: 30px; border-top: 4px solid var(--primary);">
+                <h3 class="section-title"><i class="fa-solid fa-cube"></i> 1. Fundament Systemu (Płyta Główna)</h3>
+                <p style="margin-top:-15px; margin-bottom: 25px; font-size: 0.95em;">Każda wdrożona platforma zawiera potężną bazę eliminującą chaos organizacyjny:</p>
+                <div class="core-grid">
+                    <div class="core-item">
+                        <div class="core-item-icon"><i class="fa-solid fa-users"></i></div>
+                        <div>
+                            <h4>Lejki Sprzedaży (CRM)</h4>
+                            <p>Wizualny board (Kanban), pełna historia maili, notatek i plików przypisana do każdego klienta.</p>
+                        </div>
                     </div>
-                    <div class="card" style="border-top: 4px solid var(--navy);">
-                        <h3><i class="fa-solid fa-bullhorn"></i> Argumentacja Sprzedażowa (Pitch)</h3>
-                        <div class="copy-box">
-                            <h4>Komunikat dla Twojego Klienta:</h4>
-                            <p>"${data.copywriting}"</p>
-                            <div class="cta">➜ Call to Action: Zamów wersję Demo / Zarezerwuj wdrożenie.</div>
+                    <div class="core-item">
+                        <div class="core-item-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                        <div>
+                            <h4>Oferty i E-Faktury KSeF</h4>
+                            <p>Generowanie interaktywnych kosztorysów PDF oraz faktur zgodnych z polskim prawem z opcją płatności online.</p>
+                        </div>
+                    </div>
+                    <div class="core-item">
+                        <div class="core-item-icon"><i class="fa-solid fa-list-check"></i></div>
+                        <div>
+                            <h4>Projekty i Czas Pracy</h4>
+                            <p>Zarządzanie zadaniami zespołu i mierzenie czasu (Timesheets) ułatwiające rozliczenia rentowności.</p>
+                        </div>
+                    </div>
+                    <div class="core-item">
+                        <div class="core-item-icon"><i class="fa-solid fa-laptop-house"></i></div>
+                        <div>
+                            <h4>Dedykowany Portal Klienta</h4>
+                            <p>Twój klient loguje się, by sprawdzić postęp prac, pobrać fakturę lub zgłosić usterkę (Helpdesk).</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        `;
 
-                <div class="grid-2">
-                    <div class="card">
-                        <h3><i class="fa-solid fa-triangle-exclamation"></i> Rozwiązywane Problemy (Bóle)</h3>
-                        <ul class="problem-list">
-                            ${data.problems.map(p => `<li>${p}</li>`).join('')}
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <h3><i class="fa-solid fa-check-double"></i> Twoja Recepta (Rozwiązania)</h3>
-                        <ul class="solution-list">
-                            ${data.solutions.map(s => `<li>${s}</li>`).join('')}
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="card" style="margin-bottom: 20px;">
-                    <h3><i class="fa-solid fa-magnifying-glass-chart"></i> Strategia SEO (Słowa Kluczowe)</h3>
-                    <p style="font-size: 0.85em; color: var(--text-muted); margin-top: -10px;">Wykorzystaj te frazy na swoich Landing Page'ach do pozycjonowania organicznego i kampanii Google Ads.</p>
-                    <div class="seo-tags">
-                        ${data.seo.map(tag => `<span class="seo-tag">#${tag}</span>`).join('')}
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('content-container').innerHTML = content;
+        // --- FUNKCJE RENDERUJĄCE ---
+        
+        function createIndustryMenu() {
+            const list = document.getElementById('industry-tabs');
+            industries.forEach((ind, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <button class="tab-btn" onclick="loadContent('industry', ${index}, this)">
+                        <i class="fa-solid ${ind.icon} icon-main"></i> ${ind.tabName}
+                    </button>
+                `;
+                list.appendChild(li);
+            });
         }
 
-        // Initialize first tab
+        function updateActiveButton(btnElement) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            if(btnElement) btnElement.classList.add('active');
+        }
+
+        function loadContent(type, index, btnElement) {
+            updateActiveButton(btnElement);
+            const container = document.getElementById('content-container');
+            let html = '';
+
+            if (type === 'industry') {
+                const data = industries[index];
+                html = `
+                    <div class="fade-in">
+                        <span class="header-badge badge-industry"><i class="fa-solid fa-bullseye"></i> Profil: ${data.target}</span>
+                        <h2 class="page-title">${data.title}</h2>
+                        <p class="page-desc">${data.shortDesc}</p>
+                        
+                        ${coreHTML}
+
+                        <div class="grid-2">
+                            <div class="card" style="border-top: 4px solid var(--secondary);">
+                                <h3 class="section-title"><i class="fa-solid fa-puzzle-piece"></i> 2. Architektura Branżowa (Add-ons)</h3>
+                                <p style="font-size: 0.9em; margin-bottom: 20px;">Dedykowane wtyczki aktywowane w tym pakiecie:</p>
+                                ${data.addons.map(addon => `
+                                    <div class="addon-box">
+                                        <h4>${addon.name} <span class="tag">Premium</span></h4>
+                                        <p style="font-size: 0.9em; margin:0; color: var(--text-muted);">${addon.desc}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div class="card">
+                                <h3 class="section-title"><i class="fa-solid fa-bolt"></i> Transformacja Biznesu</h3>
+                                <p style="font-size: 0.9em; font-weight:600; margin-top:0;">Przed FlowQuest OS (Bóle):</p>
+                                <ul class="custom-list problem-list" style="margin-bottom: 25px;">
+                                    ${data.problems.map(p => `<li>${p}</li>`).join('')}
+                                </ul>
+
+                                <p style="font-size: 0.9em; font-weight:600; margin-top:0;">Z FlowQuest OS (Rozwiązania):</p>
+                                <ul class="custom-list">
+                                    ${data.solutions.map(s => `<li>${s}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="copy-box">
+                            <h4><i class="fa-solid fa-pen-nib"></i> Argumentacja Sprzedażowa (Pitch)</h4>
+                            <p>"${data.copywriting}"</p>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="section-title" style="margin-bottom: 10px;"><i class="fa-solid fa-magnifying-glass-chart"></i> Słowa kluczowe (Strategia SEO)</h3>
+                            <div class="seo-tags">
+                                ${data.seo.map(tag => `<span class="seo-tag">#${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } 
+            else if (type === 'plugins') {
+                html = `
+                    <div class="fade-in">
+                        <span class="header-badge badge-addon"><i class="fa-solid fa-plug"></i> Moduły Rozszerzające</span>
+                        <h2 class="page-title">Wtyczki Dodatkowe (Upsell)</h2>
+                        <p class="page-desc">Potężne narzędzia, które możesz zaoferować klientom za dodatkową opłatą, gdy ich firma zacznie rosnąć i wymagać bardziej zaawansowanych procesów.</p>
+                        
+                        <div class="grid-3">
+                            ${plugins.map(p => `
+                                <div class="card" style="border-top: 3px solid var(--premium); padding: 25px;">
+                                    <i class="fa-solid ${p.icon}" style="font-size: 2em; color: var(--premium); margin-bottom: 15px; display: block;"></i>
+                                    <h3 style="margin: 0 0 10px 0; font-size: 1.1em;">${p.title}</h3>
+                                    <p style="font-size: 0.9em; line-height: 1.5; color: var(--text-body); margin-bottom: 15px;">${p.desc}</p>
+                                    <div style="font-size: 0.8em; background: var(--bg-main); padding: 8px; border-radius: 6px;">
+                                        <strong>Dla kogo:</strong> ${p.forWho}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            else if (type === 'services') {
+                html = `
+                    <div class="fade-in">
+                        <span class="header-badge badge-service"><i class="fa-solid fa-code"></i> Praca Agencji</span>
+                        <h2 class="page-title">Usługi Wdrożeniowe IT</h2>
+                        <p class="page-desc">Twoje pakiety eksperckie (High Ticket). Usługi realizowane ręcznie przez Ciebie i Twój zespół, stanowiące główne źródło przychodu operacyjnego.</p>
+                        
+                        <div class="grid-2">
+                            ${services.map(s => `
+                                <div class="card" style="border-top: 4px solid var(--success);">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                                        <i class="fa-solid ${s.icon}" style="font-size: 2.2em; color: var(--success);"></i>
+                                        <span class="price-badge">${s.price}</span>
+                                    </div>
+                                    <h3 style="margin: 0 0 10px 0; font-size: 1.3em;">${s.title}</h3>
+                                    <p style="font-size: 0.95em; color: var(--text-body); margin-bottom: 20px;">${s.desc}</p>
+                                    <h4 style="font-size: 0.85em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;">Co obejmuje usługa:</h4>
+                                    <ul class="custom-list">
+                                        ${s.features.map(f => `<li>${f}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+            document.getElementById('main-scroll').scrollTop = 0;
+        }
+
+        // Initialize App
         window.onload = () => {
-            loadData(0, document.querySelector('.tab-btn'));
+            createIndustryMenu();
+            // Automatically open the first group and load the first industry
+            const firstTab = document.querySelector('#industry-tabs .tab-btn');
+            if(firstTab) {
+                loadContent('industry', 0, firstTab);
+            }
         };
     </script>
-
 </body>
 </html>
